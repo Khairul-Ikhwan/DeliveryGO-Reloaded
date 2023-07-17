@@ -7,7 +7,7 @@ const connectionString = `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATAB
 const pool = new Pool({
   connectionString,
   keepAlive: true,
-  keepAliveInitialDelayMillis: 30000,
+  keepAliveInitialDelayMillis: 30000, // Delay before first keep-alive query (30 seconds)
 });
 
 pool.connect()

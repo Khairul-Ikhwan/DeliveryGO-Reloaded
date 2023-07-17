@@ -20,8 +20,8 @@ router.delete('/delete', (req, res) => {
     driverCtrl.deleteDriverByEmail(req,res,pool)
 })
 
-router.delete('/update', (req, res) => {
-    driverCtrl.updateDriver(req,res,pool)
+router.patch('/update', (req, res) => {
+    driverCtrl.updateDriverByEmail(req,res,pool)
 })
 
 module.exports = router;

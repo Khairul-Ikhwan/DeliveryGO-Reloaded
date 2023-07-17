@@ -84,10 +84,79 @@ async function deleteDriverByEmail(req, res) {
   }
 }
 
+async function updateDriverByEmail(req, res) {
+  const { email, password, driverPhone, driverPfp } = req.body;
+
+  try {
+    const querySelect = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
+    const resultSelect = await pool.query(querySelect, [email]);
+    const driver = resultSelect.rows[0];
+
+    if (!driver) {
+      return res.status(404).json({
+        message: 'Driver not found'
+      });
+    }
+
+    let hashedPassword;
+    if (password) {
+      hashedPassword = await hashPassword(password);
+    }
+
+    let queryUpdate = 'UPDATE drivers SET ';
+    const valuesUpdate = [];
+
+    if (driverPhone !== undefined) {
+      queryUpdate += `"driverPhone" = $1, `;
+      valuesUpdate.push(driverPhone);
+    }
+
+    if (driverPfp !== undefined) {
+      queryUpdate += `"driverPfp" = $${valuesUpdate.length + 1}, `;
+      valuesUpdate.push(driverPfp);
+    }
+
+    if (hashedPassword) {
+      queryUpdate += `"driverPassword" = $${valuesUpdate.length + 1}, `;
+      valuesUpdate.push(hashedPassword);
+    }
+
+    // Remove the trailing comma and add the WHERE clause
+    queryUpdate = queryUpdate.slice(0, -2) + ` WHERE "driverEmail" = $${valuesUpdate.length + 1}`;
+    valuesUpdate.push(email);
+
+    try {
+      await pool.query(queryUpdate, valuesUpdate);
+
+      const queryFetchUpdated = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
+      const resultFetchUpdated = await pool.query(queryFetchUpdated, [email]);
+      const updatedDriver = resultFetchUpdated.rows[0];
+
+      return res.status(200).json({
+        message: 'Driver updated successfully',
+        driver: updatedDriver
+      });
+    } catch (error) {
+      console.error('Error updating driver:', error);
+      return res.status(500).json({ error: 'Error updating driver' });
+    }
+  } catch (error) {
+    console.error('Error selecting driver:', error);
+    return res.status(500).json({ error: 'Error selecting driver' });
+  }
+}
+
+
+
+
+
+
+
 
 module.exports = {
   createDriver,
   getAllDrivers,
   findDriverByEmail,
   deleteDriverByEmail,
+  updateDriverByEmail,
 }
