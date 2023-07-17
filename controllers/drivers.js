@@ -120,8 +120,7 @@ async function updateDriverByEmail(req, res) {
       queryUpdate += `"driverPassword" = $${valuesUpdate.length + 1}, `;
       valuesUpdate.push(hashedPassword);
     }
-
-    // Remove the trailing comma and add the WHERE clause
+    
     queryUpdate = queryUpdate.slice(0, -2) + ` WHERE "driverEmail" = $${valuesUpdate.length + 1}`;
     valuesUpdate.push(email);
 
