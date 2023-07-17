@@ -1,8 +1,23 @@
+const driverCtrl = require('../controllers/drivers');
 const express = require('express');
 const router = express.Router();
-const { createDriver } = require('../controllers/drivers');
+const pool = require('../config/database');
 
 // Route to create a driver
-router.post('/create', createDriver);
+router.post('/create', (req, res) => {
+  driverCtrl.createDriver(req, res, pool);
+});
+
+router.get('/all-drivers', (req, res) => {
+  driverCtrl.getAllDrivers(req, res, pool);
+});
+
+router.delete('/delete', (req, res) => {
+    driverCtrl.deleteDriver(req,res,pool)
+})
+
+router.delete('/update', (req, res) => {
+    driverCtrl.updateDriver(req,res,pool)
+})
 
 module.exports = router;
