@@ -12,8 +12,12 @@ router.get('/all-drivers', (req, res) => {
   driverCtrl.getAllDrivers(req, res, pool);
 });
 
+router.get('/find-driver', (req, res) => {
+    driverCtrl.findDriverByEmail(req, res, pool);
+  });
+
 router.delete('/delete', (req, res) => {
-    driverCtrl.deleteDriver(req,res,pool)
+    driverCtrl.deleteDriverByEmail(req,res,pool)
 })
 
 router.delete('/update', (req, res) => {

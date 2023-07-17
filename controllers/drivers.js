@@ -40,7 +40,54 @@ try {
 }
 
 
+async function findDriverByEmail(req, res) {
+  try {
+    const { email } = req.body;
+    const query = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
+    const result = await pool.query(query, [email]);
+    const driver = result.rows[0];
+
+    if (driver) {
+      res.status(200).json({
+        message: 'Driver found',
+        driver: driver
+      });
+    } else {
+      res.status(404).json({
+        message: 'Driver not found'
+      });
+    }
+  } catch (error) {
+    console.error('Error finding driver:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+async function deleteDriverByEmail(req, res) {
+  try {
+    const { email } = req.body;
+    const query = 'DELETE FROM drivers WHERE "driverEmail" = $1';
+    const result = await pool.query(query, [email]);
+
+    if (result.rowCount > 0) {
+      res.status(200).json({
+        message: 'Driver deleted successfully'
+      });
+    } else {
+      res.status(404).json({
+        message: 'Driver not found'
+      });
+    }
+  } catch (error) {
+    console.error('Error deleting driver:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
 module.exports = {
   createDriver,
   getAllDrivers,
+  findDriverByEmail,
+  deleteDriverByEmail,
 }
