@@ -28,4 +28,9 @@ router.patch('/update', (req, res) => {
     driverCtrl.updateDriverByEmail(req,res,pool)
 })
 
+// Login Route
+router.post('/login', (req, res) => {
+  driverCtrl.driverLogIn(req, res, pool);
+});
+
 module.exports = router;
