@@ -153,13 +153,11 @@ async function updateDriverByEmail(req, res) {
 
 async function driverLogIn(req, res) {
   try {
-    console.log('Email:', req.body.driverEmail);
-    console.log('Password:', req.body.driverPassword);
     const { driverEmail, driverPassword } = req.body;
 
     // Check if the driver exists
-    const query = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
-    const resultSelect = await pool.query(query, [driverEmail]);
+    const querySelect = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
+    const resultSelect = await pool.query(querySelect, [driverEmail]);
     const driver = resultSelect.rows[0];
 
     if (!driver) {
