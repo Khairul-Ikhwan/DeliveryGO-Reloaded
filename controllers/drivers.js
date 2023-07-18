@@ -177,9 +177,18 @@ async function driverLogIn(req, res) {
     // Generate a JWT token
     const token = generateToken(driver.id);
 
+    // Fetch additional driver details
+    const { id, driverName, driverPhone, driverPfp } = driver;
+
     res.status(200).json({
       message: 'Driver logged in successfully',
-      driver: driver,
+      driver: {
+        id,
+        driverName,
+        driverEmail,
+        driverPhone,
+        driverPfp
+      },
       token: token
     });
   } catch (error) {
@@ -187,6 +196,7 @@ async function driverLogIn(req, res) {
     res.status(500).json({ error: 'Internal server error' });
   }
 }
+
 
 
 
