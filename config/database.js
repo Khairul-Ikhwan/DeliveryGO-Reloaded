@@ -6,13 +6,7 @@ const connectionString = `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATAB
 
 const pool = new Pool({
   connectionString,
-  keepAlive: true,
-  keepAliveInitialDelayMillis: 30000,
-  idleTimeoutMillis: 0
+  idleTimeoutMillis: 30000
 });
-
-pool.connect()
-  .then(() => console.log('Connected to PostgreSQL database'))
-  .catch((error) => console.error('Error connecting to PostgreSQL database:', error));
 
 module.exports = pool;
