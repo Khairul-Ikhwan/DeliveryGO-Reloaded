@@ -43,7 +43,7 @@ export default function DriverDashboard() {
 
   return (
     <>
-      <h1>This is the driver's dashboard</h1>
+      <h1>This is {driver.driverName}'s dashboard</h1>
       <h3>Welcome {driver.driverName}!</h3>
       <p>Email: {driver.driverEmail}</p>
       <p>Phone: {driver.driverPhone}</p>
