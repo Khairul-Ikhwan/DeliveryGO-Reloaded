@@ -1,40 +1,53 @@
-import { useEffect, useState } from "react";
-// import { verifyToken } from "../../../utilities/jwt";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { sendRequest } from "../../helpers/send-helper";
 
-export default function DriverDashboard({ token }) {
-  const [driverName, setDriverName] = useState("");
+export default function DriverDashboard() {
+  const [driver, setDriver] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDriverName = async () => {
+    const fetchDriverDetails = async () => {
       try {
-        // Verify the token
-        // const decoded = verifyToken(token);
-        // Assuming `decoded` is the decoded token object
-        // if (decoded) {
-        // Make an API call to fetch the driver's name using the token
-        const response = await fetch("/api/driver/name", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-        setDriverName(data.name);
-        // }
+        const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+        console.log("Token:", token); // Log the token value
+        const response = await sendRequest(
+          "/api/drivers/find-driver",
+          "POST",
+          null,
+          {
+            Authorization: `Bearer ${token}`, // Include the token in the request headers
+          }
+        );
+        console.log("Response:", response); // Log the response
+        setDriver(response.driver);
       } catch (error) {
-        console.error("Failed to fetch driver name:", error);
+        console.error("Error fetching driver details:", error);
+        if (error.message === "Network Error") {
+          // Handle network error separately
+          console.error(
+            "Network error occurred. Check your internet connection."
+          );
+        } else {
+          navigate("/driver/login"); // Redirect to login page for unsuccessful responses
+        }
       }
     };
 
-    if (token) {
-      fetchDriverName();
-    }
-  }, [token]);
+    fetchDriverDetails();
+  }, [navigate]);
+
+  if (!driver) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
       <h1>This is the driver's dashboard</h1>
-      <h3>Welcome {driverName ? driverName : "Driver"}!</h3>
+      <h3>Welcome {driver.driverName}!</h3>
+      <p>Email: {driver.driverEmail}</p>
+      <p>Phone: {driver.driverPhone}</p>
+      <img src={driver.driverPfp} alt="Profile Picture" />
     </>
   );
 }

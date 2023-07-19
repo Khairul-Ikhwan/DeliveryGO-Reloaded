@@ -7,7 +7,9 @@ export default function DesktopNav() {
       <p>Book A Delivery</p>
       <p>About</p>
       <p>Contact</p>
-      <p>Deliver With Us</p>
+      <NavLink to="/driver/login">
+        <p>Deliver With Us</p>
+      </NavLink>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
+import Hero from "../Blocks/Hero";
 
 export default function DriverLogin() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ export default function DriverLogin() {
       console.log(response);
 
       localStorage.setItem("token", response.token);
-      navigate("/dashboard");
+      navigate("/driver/dashboard");
     } catch (error) {
       console.error("Error logging in:", error);
     }
@@ -27,6 +28,7 @@ export default function DriverLogin() {
 
   return (
     <>
+      <Hero />
       <form onSubmit={handleSubmit}>
         <h3>Hello there, let's get to work</h3>
         <input

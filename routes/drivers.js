@@ -13,9 +13,10 @@ router.get('/all-drivers', (req, res) => {
   driverCtrl.getAllDrivers(req, res, pool);
 });
 
-// Route to find a driver by email
-router.get('/find-driver', (req, res) => {
-    driverCtrl.findDriverByEmail(req, res, pool);
+// Route to find a driver by id
+router.post('/find-driver', (req, res) => {
+  console.log('Incoming Request:', req);
+    driverCtrl.findDriverById(req, res, pool);
   });
 
 // Route to unalive a driver

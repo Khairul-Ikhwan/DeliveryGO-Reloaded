@@ -1,23 +1,30 @@
-export async function sendRequest(url, method = 'GET', body = null) {
-    try {
-      const options = {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: body ? JSON.stringify(body) : null,
-      };
-  
-      const response = await fetch(url, options);
-      const data = await response.json();
-  
-      if (!response.ok) {
-        throw new Error(data.message || 'Request failed');
-      }
-  
-      return data;
-    } catch (error) {
-      throw error;
+export async function sendRequest(url, method = 'GET', body = null, headers = {}) {
+  try {
+    const options = {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: headers.Authorization, // Include the Authorization header if provided
+      },
+      body: body ? JSON.stringify(body) : null,
+    };
+
+    console.log('Request:', {
+      url,
+      method,
+      body,
+      headers: options.headers,
+    });
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Request failed');
     }
+
+    return data;
+  } catch (error) {
+    throw error;
   }
-  
+}
