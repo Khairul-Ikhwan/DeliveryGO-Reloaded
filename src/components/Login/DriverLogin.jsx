@@ -28,18 +28,19 @@ export default function DriverLogin() {
 
   return (
     <>
-      <Hero />
-      <form onSubmit={handleSubmit}>
-        <h3>Hello there, let's get to work</h3>
-        <input
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input type="password" placeholder="Password" name="password" />
-        <button type="submit">Login</button>
-      </form>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <h3>Hello there, let's get to work</h3>
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input type="password" placeholder="Password" name="password" />
+          <button type="submit">Login</button>
+        </form>
+      </div>
     </>
   );
 }
