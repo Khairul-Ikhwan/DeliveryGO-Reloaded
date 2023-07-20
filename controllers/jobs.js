@@ -74,4 +74,30 @@ async function createJob(req, res) {
   }
 }
 
-module.exports = { createJob };
+async function assignDriver(req, res) {
+    try {
+      const { jobId, driverId } = req.body;
+  
+      const updateQuery = `
+        UPDATE jobs
+        SET driver_id = $1
+        WHERE id = $2
+        RETURNING *
+      `;
+      const updateValues = [driverId, jobId];
+  
+      const result = await pool.query(updateQuery, updateValues);
+      const updatedJob = result.rows[0];
+  
+      res.status(200).json({
+        message: 'Job updated successfully',
+        job: updatedJob
+      });
+    } catch (error) {
+      console.error('Error updating job:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
+
+module.exports = { createJob, assignDriver };

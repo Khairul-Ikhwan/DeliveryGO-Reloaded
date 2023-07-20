@@ -8,6 +8,10 @@ router.post('/create', (req, res) => {
     jobsCtrl.createJob(req, res, pool);
   });
 
+  router.post('/assign', (req, res) => {
+    jobsCtrl.assignDriver(req, res, pool);
+  });
+
 
 
 module.exports = router;
