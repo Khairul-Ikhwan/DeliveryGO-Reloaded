@@ -9,13 +9,6 @@ export async function sendRequest(url, method = 'GET', body = null, headers = {}
       body: body ? JSON.stringify(body) : null,
     };
 
-    console.log('Request:', {
-      url,
-      method,
-      body,
-      headers: options.headers,
-    });
-
     const response = await fetch(url, options);
     const data = await response.json();
 

@@ -5,7 +5,7 @@ const jobsCtrl = require('../controllers/jobs');
 
 
 router.post('/create', (req, res) => {
-    jobsCtrl.createUser(req, res, pool);
+    jobsCtrl.createJob(req, res, pool);
   });
 
 

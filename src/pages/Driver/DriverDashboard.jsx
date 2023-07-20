@@ -10,27 +10,26 @@ export default function DriverDashboard() {
   useEffect(() => {
     const fetchDriverDetails = async () => {
       try {
-        const token = localStorage.getItem("token"); // Retrieve the token from localStorage
-        console.log("Token:", token); // Log the token value
+        const token = localStorage.getItem("token");
         const response = await sendRequest(
           "/api/drivers/find-driver",
           "POST",
           null,
           {
-            Authorization: `Bearer ${token}`, // Include the token in the request headers
+            Authorization: `Bearer ${token}`,
           }
         );
-        console.log("Response:", response); // Log the response
-        setDriver(response.driver);
+        const { driverName, driverEmail, driverPhone, driverPfp } =
+          response.driver;
+        setDriver({ driverName, driverEmail, driverPhone, driverPfp });
       } catch (error) {
         console.error("Error fetching driver details:", error);
         if (error.message === "Network Error") {
-          // Handle network error separately
           console.error(
             "Network error occurred. Check your internet connection."
           );
         } else {
-          navigate("/driver/login"); // Redirect to login page for unsuccessful responses
+          navigate("/driver/login");
         }
       }
     };
