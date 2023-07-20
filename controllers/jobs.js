@@ -3,7 +3,6 @@ const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/database');
 const googleAPIKey = process.env.MAPS_API_KEY;
 
-
 async function createJob(req, res) {
   try {
     const {
@@ -101,9 +100,9 @@ async function assignDriver(req, res) {
     }
   }
 
-  async function getDistance(req, res) {
+  async function getDistAndPrice(req, res) {
     try {
-      const { deliveryPostal, pickupPostal } = req.body;
+      const { deliveryPostal, pickupPostal, jobTypeName } = req.body;
   
       const url = `https://maps.googleapis.com/maps/api/distancematrix/json?` +
         `destinations=${encodeURIComponent(deliveryPostal)}` +
@@ -113,21 +112,44 @@ async function assignDriver(req, res) {
   
       const response = await fetch(url);
       const data = await response.json();
+      console.log(data); 
   
       if (!response.ok) {
         throw new Error(data.message || 'Request failed');
       }
   
-      const distance = data.rows[0].elements[0].distance.text;
-      const distanceValue = parseFloat(distance.replace(/[^0-9.]/g, ''));
+      const distanceText = data.rows[0].elements[0].distance.text;
+      const distanceValue = parseFloat(distanceText.replace(/[^0-9.]/g, ''));
+      const { base_price, price_per_km } = await getPrice(jobTypeName);
+
+      const computedPrice = base_price + (distanceValue * price_per_km)
   
-      res.status(200).json({ distanceValue });
+      res.status(200).json({ computedPrice });
     } catch (error) {
       console.error('Error calculating distance:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
   
+  async function getPrice(jobTypeName) {
+    try {
+      const query = 'SELECT base_price, price_per_km FROM job_types WHERE name = $1';
+      const result = await pool.query(query, [jobTypeName]);
+      const jobType = result.rows[0];
+  
+      if (!jobType) {
+        return { base_price: null, price_per_km: null };
+      }
+  
+      return jobType;
+    } catch (error) {
+      console.error('Error retrieving price:', error);
+      throw error;
+    }
+  }
+  
+  
+  
   
 
-module.exports = { createJob, assignDriver, getDistance };
+module.exports = { createJob, assignDriver, getDistAndPrice };

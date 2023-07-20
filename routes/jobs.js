@@ -13,7 +13,7 @@ router.post('/create', (req, res) => {
   });
 
   router.post('/getDistance', (req, res) => {
-    jobsCtrl.getDistance(req, res, pool);
+    jobsCtrl.getDistAndPrice(req, res, pool);
   });
 
 
