@@ -23,7 +23,6 @@ async function createUser(req, res) {
       user: insertedUser
     });
   } catch (error) {
-    // Handle any errors that occur during the INSERT operation
     console.error('Error creating user:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
