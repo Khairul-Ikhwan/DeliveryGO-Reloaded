@@ -26,6 +26,9 @@ app.use('/api/drivers', driverRoutes);
 const userRoutes = require('./routes/users');
 app.use('/api/users', userRoutes);
 
+const jobRoutes = require('./routes/jobs')
+app.use('/api/jobs', jobRoutes)
+
 // Catch all route
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
