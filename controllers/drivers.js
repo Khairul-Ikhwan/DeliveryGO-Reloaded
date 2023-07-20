@@ -47,23 +47,18 @@ try {
 
 async function findDriverById(req, res) {
   try {
-    const authorizationHeader = req.headers.authorization; // Retrieve the authorization header from the request
+    const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
       return res.status(401).json({ message: "Invalid token" });
     }
 
-    // Extract the token from the authorization header
     const accessToken = authorizationHeader.slice(7);
-
-    // Verify the token and decode the driver ID
     const decoded = verifyToken(accessToken);
     if (!decoded) {
       return res.status(401).json({ message: "Invalid token" });
     }
 
     const { driverId } = decoded;
-
-    // Proceed with your database query to find the driver by ID
     const query = 'SELECT * FROM drivers WHERE "id" = $1';
     const result = await pool.query(query, [driverId]);
     const driver = result.rows[0];
@@ -83,12 +78,6 @@ async function findDriverById(req, res) {
     res.status(500).json({ error: 'Internal server error' });
   }
 }
-
-
-
-
-
-
 
 async function deleteDriverByEmail(req, res) {
   try {
@@ -176,8 +165,6 @@ async function updateDriverByEmail(req, res) {
 async function driverLogIn(req, res) {
   try {
     const { driverEmail, driverPassword } = req.body;
-
-    // Check if the driver exists
     const querySelect = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
     const resultSelect = await pool.query(querySelect, [driverEmail]);
     const driver = resultSelect.rows[0];
@@ -188,7 +175,6 @@ async function driverLogIn(req, res) {
       });
     }
 
-    // Verify the password
     const isPasswordValid = await comparePassword(driverPassword, driver.driverPassword);
     if (!isPasswordValid) {
       return res.status(401).json({
@@ -196,7 +182,6 @@ async function driverLogIn(req, res) {
       });
     }
 
-    // Generate a JWT token
     const token = generateToken(driver.id);
 
     // Fetch additional driver details
@@ -218,12 +203,6 @@ async function driverLogIn(req, res) {
     res.status(500).json({ error: 'Internal server error' });
   }
 }
-
-
-
-
-
-
 
 
 module.exports = {
