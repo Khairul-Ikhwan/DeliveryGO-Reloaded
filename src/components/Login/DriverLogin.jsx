@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
-import Hero from "../Blocks/Hero";
 
 export default function DriverLogin() {
   const [email, setEmail] = useState("");

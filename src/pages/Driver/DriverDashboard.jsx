@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
+import LogOutButton from "../../components/Login/LogOutButton";
 
 export default function DriverDashboard() {
   const [driver, setDriver] = useState(null);
@@ -47,7 +48,8 @@ export default function DriverDashboard() {
       <h3>Welcome {driver.driverName}!</h3>
       <p>Email: {driver.driverEmail}</p>
       <p>Phone: {driver.driverPhone}</p>
-      <img src={driver.driverPfp} alt="Profile Picture" />
+      <img src={driver.driverPfp} alt="Profile" />
+      <LogOutButton path="/driver/login" />
     </>
   );
 }
