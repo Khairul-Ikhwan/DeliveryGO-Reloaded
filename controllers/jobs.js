@@ -1,4 +1,3 @@
-const { hashPassword } = require('../utilities/bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/database');
 const googleAPIKey = process.env.MAPS_API_KEY;
@@ -68,6 +67,7 @@ async function createJob(req, res) {
     res.status(201).json({
       message: 'Job created successfully',
       job: insertedJob
+     
     });
   } catch (error) {
     console.error('Error creating job:', error);
@@ -112,7 +112,6 @@ async function assignDriver(req, res) {
   
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data); 
   
       if (!response.ok) {
         throw new Error(data.message || 'Request failed');
