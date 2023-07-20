@@ -20,7 +20,9 @@ async function createJob(req, res) {
       price,
       items,
       itemsImg,
-      status
+      status,
+      time,
+      date,
     } = req.body;
 
     // Generate a UUID for the job ID
@@ -33,8 +35,8 @@ async function createJob(req, res) {
 
     // Construct the INSERT query with the retrieved values
     const insertQuery = `
-      INSERT INTO jobs (id, type_id, user_id, pickup_address_street, pickup_address_unit, pickup_address_postal, pickup_address_building_name, delivery_address_street, delivery_address_unit, delivery_address_postal, delivery_address_building_name, job_comments, total_distance, price, items, items_img, status)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+      INSERT INTO jobs (id, type_id, user_id, pickup_address_street, pickup_address_unit, pickup_address_postal, pickup_address_building_name, delivery_address_street, delivery_address_unit, delivery_address_postal, delivery_address_building_name, job_comments, total_distance, price, items, items_img, status, time, date)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
       RETURNING *
     `;
     const insertValues = [
@@ -54,7 +56,9 @@ async function createJob(req, res) {
       price,
       items,
       itemsImg,
-      status
+      status,
+      time,
+      date
     ];
 
     const result = await pool.query(insertQuery, insertValues);
