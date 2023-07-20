@@ -12,6 +12,9 @@ router.post('/create', (req, res) => {
     jobsCtrl.assignDriver(req, res, pool);
   });
 
+  router.post('/getDistance', (req, res) => {
+    jobsCtrl.getDistance(req, res, pool);
+  });
 
 
 module.exports = router;

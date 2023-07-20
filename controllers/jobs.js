@@ -1,6 +1,8 @@
 const { hashPassword } = require('../utilities/bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/database');
+const googleAPIKey = process.env.MAPS_API_KEY;
+
 
 async function createJob(req, res) {
   try {
@@ -98,6 +100,34 @@ async function assignDriver(req, res) {
       res.status(500).json({ error: 'Internal server error' });
     }
   }
+
+  async function getDistance(req, res) {
+    try {
+      const { deliveryPostal, pickupPostal } = req.body;
+  
+      const url = `https://maps.googleapis.com/maps/api/distancematrix/json?` +
+        `destinations=${encodeURIComponent(deliveryPostal)}` +
+        `&origins=${encodeURIComponent(pickupPostal)}` +
+        `&units=metric&key=${googleAPIKey}` +
+        `&region=sg`;
+  
+      const response = await fetch(url);
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.message || 'Request failed');
+      }
+  
+      const distance = data.rows[0].elements[0].distance.text;
+      const distanceValue = parseFloat(distance.replace(/[^0-9.]/g, ''));
+  
+      res.status(200).json({ distanceValue });
+    } catch (error) {
+      console.error('Error calculating distance:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
   
 
-module.exports = { createJob, assignDriver };
+module.exports = { createJob, assignDriver, getDistance };
