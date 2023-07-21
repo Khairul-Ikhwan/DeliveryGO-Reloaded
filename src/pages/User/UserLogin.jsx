@@ -1,6 +1,7 @@
 import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
+import "../../styles/login.css";
 
 export default function UserLogin() {
   const [email, setEmail] = useState("");
@@ -29,9 +30,11 @@ export default function UserLogin() {
 
   return (
     <>
-      <div>
+      <div className="login-container">
         <form onSubmit={handleSubmit}>
-          <h3>Hello there, let's log you in!</h3>
+          <header>
+            Hello There, <br /> Let's Log You In!
+          </header>
           <input
             type="text"
             placeholder="Email"
@@ -45,6 +48,7 @@ export default function UserLogin() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">Login</button>
+          <p>Sign Up Instead</p>
         </form>
       </div>
     </>

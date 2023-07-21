@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
+import "../../styles/login.css";
 
 export default function DriverLogin() {
   const [email, setEmail] = useState("");
@@ -25,9 +26,11 @@ export default function DriverLogin() {
 
   return (
     <>
-      <div>
+      <div className="login-container">
         <form onSubmit={handleSubmit}>
-          <h3>Hello there, let's get to work</h3>
+          <h2>
+            Hello There, <br /> Let's Get To Work
+          </h2>
           <input
             type="text"
             placeholder="Email"

@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router";
 import DesktopNav from "../../components/Navbars/DesktopNav";
-import DriverLogin from "../../components/Login/DriverLogin";
+
 import DriverDashboard from "../Driver/DriverDashboard";
 import "./App.css";
 import HomePage from "./HomePage";
-import UserLogin from "../../components/Login/UserLogin";
+import DriverLogin from "../Driver/DriverLogin";
+import UserLogin from "../User/UserLogin";
 
 export default function App() {
   return (
