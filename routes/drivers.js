@@ -33,4 +33,9 @@ router.post('/login', (req, res) => {
   driverCtrl.driverLogIn(req, res, pool);
 });
 
+router.post('/check', (req, res) => {
+  driverCtrl.checkEmail(req, res, pool);
+});
+
+
 module.exports = router;

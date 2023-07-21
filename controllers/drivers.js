@@ -202,6 +202,32 @@ async function driverLogIn(req, res) {
   }
 }
 
+async function checkEmail(req, res) {
+  try {
+    const { driverEmail } = req.body;
+
+    const query = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
+    const result = await pool.query(query, [driverEmail]);
+    const driver = result.rows[0];
+
+    if (driver) {
+      res.status(200).json({
+        message: 'Driver found',
+        driver: driver
+      });
+    } else {
+      //In this case we want both a 200
+      res.status(200).json({
+        message: 'Driver not found'
+      });
+    }
+  } catch (error) {
+    console.error('Error finding driver by email:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
 
 module.exports = {
   createDriver,
@@ -210,4 +236,5 @@ module.exports = {
   deleteDriverByEmail,
   updateDriverByEmail,
   driverLogIn,
+  checkEmail,
 }

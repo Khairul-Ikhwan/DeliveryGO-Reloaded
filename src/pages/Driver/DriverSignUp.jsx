@@ -13,7 +13,9 @@ export default function DriverSignUp() {
       document.title = "Delivery GO | Powered by the Community";
     };
   }, []);
+
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     driverName: "",
     driverEmail: "",
@@ -22,6 +24,8 @@ export default function DriverSignUp() {
     driverPassword: "",
     confirmPassword: "",
   });
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,20 +38,34 @@ export default function DriverSignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.driverPassword !== formData.confirmPassword) {
-      console.error("Password mismatch");
+      setErrorMessage("Password mismatch");
       return;
     }
 
     try {
-      const response = await sendRequest(
-        "/api/drivers/create",
+      // Check if the driver with the provided email already exists
+      const checkEmailResponse = await sendRequest(
+        "/api/drivers/check",
         "POST",
-        formData
+        { driverEmail: formData.driverEmail }
       );
-      localStorage.setItem("token", response.token);
-      navigate("/driver/dashboard");
-      console.log("Driver created successfully");
-      console.log(response);
+
+      if (checkEmailResponse.message === "Driver found") {
+        setErrorMessage("Email is already registered");
+        return;
+      } else {
+        // Proceed with driver registration
+        const createResponse = await sendRequest(
+          "/api/drivers/create",
+          "POST",
+          formData
+        );
+
+        localStorage.setItem("token", createResponse.token);
+        navigate("/driver/dashboard");
+        console.log("Driver created successfully");
+        console.log(createResponse);
+      }
     } catch (error) {
       console.error("Error creating driver:", error);
     }
@@ -121,12 +139,15 @@ export default function DriverSignUp() {
             required
           />
         </div>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit" disabled={isSubmitDisabled}>
           Register
         </button>
 
         <p>
-          <NavLink to="/driver/login">Have an account? Login Instead!</NavLink>
+          <NavLink to="/driver/login">
+            Have a driver account? Login here!
+          </NavLink>
         </p>
       </form>
     </div>
