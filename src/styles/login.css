@@ -71,11 +71,17 @@
 
 .login-container button:hover{
     transform: translateY(-2px);
+    background: #3b49df;
 }
 
 .login-container p {
     display: inline-block;
     align-self: center;
+    cursor: pointer;
+}
+
+.login-container p:hover{
+    text-decoration: underline;
 }
 
 .hidden {
