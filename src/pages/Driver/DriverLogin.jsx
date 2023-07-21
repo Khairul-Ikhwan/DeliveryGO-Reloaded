@@ -39,6 +39,7 @@ export default function DriverLogin() {
           />
           <input type="password" placeholder="Password" name="password" />
           <button type="submit">Login</button>
+          <p>No Driver Account? Sign Up Instead.</p>
         </form>
       </div>
     </>
