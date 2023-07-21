@@ -16,8 +16,6 @@ export default function DriverLogin() {
         driverPassword: password,
       });
 
-      console.log(response);
-
       localStorage.setItem("token", response.token);
       navigate("/driver/dashboard");
     } catch (error) {

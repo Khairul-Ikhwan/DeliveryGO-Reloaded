@@ -15,7 +15,6 @@ router.get('/all-drivers', (req, res) => {
 
 // Route to find a driver by id
 router.post('/find-driver', (req, res) => {
-  console.log('Incoming Request:', req);
     driverCtrl.findDriverById(req, res, pool);
   });
 
