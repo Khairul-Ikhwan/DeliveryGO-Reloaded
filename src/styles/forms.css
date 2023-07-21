@@ -1,7 +1,4 @@
-/* https://copy-paste-css.com/form-input-text */
-/* https://cssgradient.io/ */
-
-.login-container {
+.forms-container {
     margin: 1% 0 1% 0;
     display: flex;
     justify-content: center;
@@ -11,7 +8,7 @@
     font-size: .9rem;
 }
 
-.login-container header {
+.forms-container header {
     align-self: center;
     text-align: center;
     font-weight: 600;
@@ -19,7 +16,7 @@
     font-size: 1.5rem;
 }
 
-.login-container form {
+.forms-container form {
     display: flex;
     width: 25%;
     height: max-content;
@@ -33,7 +30,11 @@
     
 }
 
-.login-container input {
+.forms-container div {
+    display: grid;
+}
+
+.forms-container input {
     border-radius: 5px;
     background: rgb(249, 250, 250);
     border: 1px solid rgb(181, 189, 196);
@@ -45,6 +46,7 @@
     box-shadow: none;
     width: 80%;
     align-self: center;
+    justify-self: center
 }
 
 .login-container input:focus{
@@ -53,7 +55,7 @@
     box-shadow: 1px 1px 0 #3b49df;
 }
 
-.login-container button {
+.forms-container button {
     display: inline-block;
     outline: 0;
     border: 0;
@@ -70,43 +72,23 @@
     align-self: center;
 }
 
-.login-container button:hover{
+.forms-container button:hover{
     transform: translateY(-2px);
     background: #3b49df;
 }
 
-.login-container p {
+.forms-container button:disabled{
+    transform: translateY(-2px);
+    background: grey;
+    cursor:not-allowed;
+}
+
+.forms-container form p {
     display: inline-block;
     align-self: center;
     cursor: pointer;
 }
 
-.login-container msg {
-    display: inline-block;
-    align-self: center;
-}
-
-.login-container p:hover{
+.forms-container form p:hover{
     text-decoration: underline;
-}
-
-.error-message {
-    color: red
-}
-
-.hidden {
-    display: none;
-}
-
-@media (max-width: 650px) {
-.login-container {
-    padding: 2%;
-    box-sizing: border-box;
-}
-
-    .login-container form {
-        width: 100%;
-        padding: 5%;
-        box-sizing: border-box;
-    }
 }

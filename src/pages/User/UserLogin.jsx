@@ -49,7 +49,7 @@ export default function UserLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && <p className="error-message">{error}</p>}
+          {error && <msg className="error-message">{error}</msg>}
           <button type="submit">Login</button>
           <p>No User Account? Sign Up Instead.</p>
         </form>

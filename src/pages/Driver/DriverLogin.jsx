@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
 import "../../styles/login.css";
 
@@ -46,9 +46,14 @@ export default function DriverLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && <p className="error-message">{error}</p>}
+          {error && <msg className="error-message">{error}</msg>}
           <button type="submit">Login</button>
-          <p>No Driver Account? Sign Up Instead.</p>
+
+          <p>
+            <NavLink to="/driver/signup">
+              No Driver Account? Sign Up Instead.
+            </NavLink>
+          </p>
         </form>
       </div>
     </>
