@@ -60,7 +60,7 @@ export default function DriverSignUp() {
   return (
     <div className="forms-container">
       <form onSubmit={handleSubmit}>
-        <header>Let's Sign You Up!</header>
+        <header>Driver Sign Up</header>
         <div>
           <input
             type="text"
