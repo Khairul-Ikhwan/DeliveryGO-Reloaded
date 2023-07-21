@@ -28,9 +28,9 @@ export default function DriverLogin() {
     <>
       <div className="login-container">
         <form onSubmit={handleSubmit}>
-          <h2>
+          <header>
             Hello There, <br /> Let's Get To Work
-          </h2>
+          </header>
           <input
             type="text"
             placeholder="Email"
