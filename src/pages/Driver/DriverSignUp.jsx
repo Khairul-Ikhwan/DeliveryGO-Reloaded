@@ -84,7 +84,7 @@ export default function DriverSignUp() {
         <div>
           <input
             type="tel"
-            placeholder="Contact"
+            placeholder="Phone Number (include +65)"
             name="driverPhone"
             value={formData.driverPhone}
             onChange={handleChange}
