@@ -92,3 +92,16 @@
 .forms-container form p:hover{
     text-decoration: underline;
 }
+
+@media (max-width: 650px) {
+    .forms-container {
+        padding: 2%;
+        box-sizing: border-box;
+    }
+    
+        .forms-container form {
+            width: 100%;
+            padding: 5%;
+            box-sizing: border-box;
+        }
+    }
