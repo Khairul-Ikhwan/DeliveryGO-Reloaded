@@ -33,6 +33,14 @@ export default function DriverSignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let cleanedPhoneNumber = formData.driverPhone
+      .trim()
+      .replace(/^(\+?65)/, "");
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      driverPhone: cleanedPhoneNumber,
+    }));
     if (formData.driverPassword !== formData.confirmPassword) {
       console.error("Password mismatch");
       return;
