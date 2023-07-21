@@ -6,6 +6,7 @@ import "../../styles/login.css";
 export default function UserLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   //   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -25,6 +26,7 @@ export default function UserLogin() {
       // navigate('/dashboard');
     } catch (error) {
       console.error("Error logging in:", error);
+      setError("Invalid email or password. Please try again.");
     }
   };
 
@@ -47,8 +49,9 @@ export default function UserLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {error && <p className="error-message">{error}</p>}
           <button type="submit">Login</button>
-          <p>Sign Up Instead</p>
+          <p>No User Account? Sign Up Instead.</p>
         </form>
       </div>
     </>

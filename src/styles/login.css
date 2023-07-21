@@ -85,6 +85,10 @@
     text-decoration: underline;
 }
 
+.error-message {
+    color: red
+}
+
 .hidden {
     display: none;
 }

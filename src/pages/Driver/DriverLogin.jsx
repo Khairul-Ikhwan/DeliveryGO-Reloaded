@@ -5,15 +5,17 @@ import "../../styles/login.css";
 
 export default function DriverLogin() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const password = e.target.elements.password.value;
+    setError(null); // Reset error state before the new login attempt
 
     try {
       const response = await sendRequest("/api/drivers/login", "POST", {
-        driverEmail: email.toLowerCase(),
+        driverEmail: email,
         driverPassword: password,
       });
 
@@ -21,6 +23,7 @@ export default function DriverLogin() {
       navigate("/driver/dashboard");
     } catch (error) {
       console.error("Error logging in:", error);
+      setError("Invalid email or password. Please try again."); // Set error state based on the response
     }
   };
 
@@ -37,7 +40,13 @@ export default function DriverLogin() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input type="password" placeholder="Password" name="password" />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {error && <p className="error-message">{error}</p>}
           <button type="submit">Login</button>
           <p>No Driver Account? Sign Up Instead.</p>
         </form>
