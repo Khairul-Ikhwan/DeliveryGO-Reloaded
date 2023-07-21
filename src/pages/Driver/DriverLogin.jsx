@@ -13,7 +13,7 @@ export default function DriverLogin() {
 
     try {
       const response = await sendRequest("/api/drivers/login", "POST", {
-        driverEmail: email,
+        driverEmail: email.toLowerCase(),
         driverPassword: password,
       });
 
