@@ -183,8 +183,6 @@ async function driverLogIn(req, res) {
     }
 
     const token = generateToken(driver.id);
-
-    // Fetch additional driver details
     const { id, driverName, driverPhone, driverPfp } = driver;
 
     res.status(200).json({

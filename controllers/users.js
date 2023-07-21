@@ -1,6 +1,7 @@
-const {hashPassword} = require('../utilities/bcrypt');
+const {hashPassword, comparePassword} = require('../utilities/bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/database')
+const {generateToken} = require('../utilities/jwt')
 
 // Create User
 async function createUser(req, res) {
@@ -28,5 +29,65 @@ async function createUser(req, res) {
   }
 }
 
+async function userLogIn(req, res) {
+  try {
+    const { userEmail, userPassword } = req.body;
+    const querySelect = 'SELECT * FROM users WHERE "userEmail" = $1';
+    const resultSelect = await pool.query(querySelect, [userEmail]);
+    const user = resultSelect.rows[0];
 
-module.exports = { createUser };
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found'
+      });
+    }
+
+    const isPasswordValid = await comparePassword(userPassword, user.userPassword);
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        message: 'Invalid password'
+      });
+    }
+
+    const token = generateToken(user.userId);
+    const {
+      userId,
+      userName,
+      userPfp,
+      userEmail: retrievedUserEmail,
+      userPhone,
+      userBlk,
+      userStreet,
+      userUnit,
+      userPostal,
+      userBuildingName,
+      userStatus
+    } = user;
+
+    res.status(200).json({
+      message: 'User logged in successfully',
+      user: {
+        userId,
+        userName,
+        userPfp,
+        userEmail: retrievedUserEmail,
+        userPhone,
+        userBlk,
+        userStreet,
+        userUnit,
+        userPostal,
+        userBuildingName,
+        userStatus
+      },
+      token: token
+    });
+  } catch (error) {
+    console.error('Error logging in user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+    console.log(error)
+  }
+}
+
+
+
+module.exports = { createUser, userLogIn };

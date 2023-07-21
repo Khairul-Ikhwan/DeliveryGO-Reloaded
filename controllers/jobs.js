@@ -121,7 +121,7 @@ async function assignDriver(req, res) {
       const distanceValue = parseFloat(distanceText.replace(/[^0-9.]/g, ''));
       const { base_price, price_per_km } = await getPrice(jobTypeName);
       const computedPrice = Number((base_price + distanceValue * price_per_km).toFixed(1));
-      res.status(200).json({ computedPrice });
+      res.status(200).json({ computedPrice, distanceValue });
     } catch (error) {
       console.error('Error calculating distance:', error);
       res.status(500).json({ error: 'Internal server error' });

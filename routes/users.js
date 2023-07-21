@@ -8,6 +8,9 @@ router.post('/create', (req, res) => {
     userCtrl.createUser(req, res, pool);
   });
 
+router.post('/login', (req, res) => {
+  userCtrl.userLogIn(req, res, pool)
+})
 
 
 module.exports = router;
