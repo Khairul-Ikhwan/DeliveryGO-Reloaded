@@ -145,8 +145,27 @@ async function assignDriver(req, res) {
     }
   }
   
+  async function getJobs(req, res) {
+    try {
+      const status = "Created"; // Specify the status for which you want to retrieve jobs
+  
+      const query = `
+        SELECT *
+        FROM jobs
+        WHERE status = $1
+      `;
+      const result = await pool.query(query, [status]);
+      const jobs = result.rows;
+  
+      res.status(200).json({ jobs });
+      console.log(jobs)
+    } catch (error) {
+      console.error('Error retrieving jobs:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
   
   
   
 
-module.exports = { createJob, assignDriver, getDistAndPrice };
+module.exports = { createJob, assignDriver, getDistAndPrice, getJobs };

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
 import LogOutButton from "../../components/Login/LogOutButton";
 import "../../styles/dashboard.css";
+import JobsPage from "../Jobs/JobsPage";
 
 export default function DriverDashboard() {
   const [driver, setDriver] = useState(null);
@@ -30,7 +31,7 @@ export default function DriverDashboard() {
             "Network error occurred. Check your internet connection."
           );
         } else {
-          navigate("/driver/login");
+          navigate("/driver");
         }
       }
     };
@@ -43,13 +44,17 @@ export default function DriverDashboard() {
   }
 
   return (
-    <div className="dashboard">
-      <img src={driver.driverPfp} alt="Profile" />
-      <h3>Welcome {driver.driverName}!</h3>
-      <p>Email: {driver.driverEmail}</p>
-      <p>Phone: {driver.driverPhone}</p>
-
-      <LogOutButton path="/driver" />
-    </div>
+    <>
+      <div className="dashboard">
+        <img src={driver.driverPfp} alt="Profile" />
+        <h3>Welcome {driver.driverName}!</h3>
+        <p>Email: {driver.driverEmail}</p>
+        <p>Phone: {driver.driverPhone}</p>
+        <LogOutButton path="/driver" />
+      </div>
+      <div>
+        <JobsPage />
+      </div>
+    </>
   );
 }

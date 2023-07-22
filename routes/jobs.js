@@ -16,5 +16,8 @@ router.post('/create', (req, res) => {
     jobsCtrl.getDistAndPrice(req, res, pool);
   });
 
+  router.get('/getJobs', (req, res) => {
+    jobsCtrl.getJobs(req, res, pool);
+  });
 
 module.exports = router;

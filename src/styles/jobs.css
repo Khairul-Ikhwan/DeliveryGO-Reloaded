@@ -1,0 +1,19 @@
+.job-container {
+    display: flex;
+    flex-direction: row;
+    border: 1px red solid;
+    justify-content: center;
+}
+
+.job-card {
+    border: 1px solid red;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30%;
+    max-width: 350px;
+    padding: 1%;
+    box-sizing: border-box;
+    text-align: left;
+}
