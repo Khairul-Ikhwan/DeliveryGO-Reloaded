@@ -1,8 +1,10 @@
 .job-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border: 1px red solid;
     justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 
 .job-card {
@@ -12,8 +14,18 @@
     flex-direction: column;
     gap: 10px;
     width: 30%;
-    max-width: 350px;
     padding: 1%;
     box-sizing: border-box;
     text-align: left;
 }
+
+@media (max-width: 900px) {
+    .job-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .job-card {
+        width: 100%;
+        border: 1px solid blue;
+    }
+  }
