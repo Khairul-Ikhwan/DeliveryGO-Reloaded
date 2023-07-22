@@ -94,6 +94,15 @@
     text-decoration: underline;
 }
 
+.forms-container msg {
+    display: inline-block;
+    align-self: center;
+}
+
+.forms-message {
+    color: red
+}
+
 @media (max-width: 850px) {
     .forms-container {
         padding: 2%;

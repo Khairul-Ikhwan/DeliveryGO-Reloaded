@@ -1,8 +1,8 @@
 import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
-import "../../styles/login.css";
 import { NavLink } from "react-router-dom";
+import "../../styles/forms.css";
 
 export default function UserLogin({ onSignUpClick }) {
   const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ export default function UserLogin({ onSignUpClick }) {
 
   return (
     <>
-      <div className="login-container">
+      <div className="forms-container">
         <form onSubmit={handleSubmit}>
           <header>
             Hello There, <br /> Let's Log You In!
