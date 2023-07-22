@@ -1,13 +1,9 @@
 import { Routes, Route } from "react-router";
 import DesktopNav from "../../components/Navbars/DesktopNav";
-
-import DriverDashboard from "../Driver/DriverDashboard";
 import "./App.css";
 import HomePage from "./HomePage";
-import DriverLogin from "../Driver/DriverLogin";
-import UserLogin from "../User/UserLogin";
-import DriverSignUp from "../Driver/DriverSignUp";
-import LoginPage from "../Login-SignUp/LoginPage";
+import DriverPage from "../Driver/DriverPage";
+import UserPage from "../User/UserPage";
 
 export default function App() {
   return (
@@ -15,7 +11,8 @@ export default function App() {
       <DesktopNav />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/driver" element={<DriverPage />} />
+        <Route path="/user" element={<UserPage />} />
       </Routes>
     </main>
   );

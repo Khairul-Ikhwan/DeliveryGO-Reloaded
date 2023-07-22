@@ -4,7 +4,7 @@ import "../../styles/forms.css";
 import { sendRequest } from "../../helpers/send-helper";
 import { NavLink } from "react-router-dom";
 
-export default function DriverSignUp() {
+export default function DriverSignUp({ onSignUpClick }) {
   useEffect(() => {
     document.title = "Driver Sign Up";
 
@@ -145,7 +145,7 @@ export default function DriverSignUp() {
         </button>
 
         <p>
-          <NavLink to="/driver/login">
+          <NavLink to="#" onClick={onSignUpClick}>
             Have a driver account? Login here!
           </NavLink>
         </p>

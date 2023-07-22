@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
-import "../../styles/login.css";
+import "../../styles/forms.css";
 
-export default function DriverLogin() {
+export default function DriverLogin({ onSignUpClick }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -29,7 +29,7 @@ export default function DriverLogin() {
 
   return (
     <>
-      <div className="login-container">
+      <div className="forms-container">
         <form onSubmit={handleSubmit}>
           <header>
             Hello There, <br /> Let's Get To Work
@@ -50,7 +50,7 @@ export default function DriverLogin() {
           <button type="submit">Login</button>
 
           <p>
-            <NavLink to="/driver/signup">
+            <NavLink to="#" onClick={onSignUpClick}>
               No Driver Account? Sign Up Instead.
             </NavLink>
           </p>

@@ -18,7 +18,8 @@
 
 .forms-container form {
     display: flex;
-    width: 25%;
+    min-width: 30%;
+    max-width: 40%;
     height: max-content;
     border-radius: 20px;
     flex-direction: column;
@@ -93,14 +94,14 @@
     text-decoration: underline;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 850px) {
     .forms-container {
         padding: 2%;
         box-sizing: border-box;
     }
     
         .forms-container form {
-            width: 100%;
+            min-width: 100%;
             padding: 5%;
             box-sizing: border-box;
         }

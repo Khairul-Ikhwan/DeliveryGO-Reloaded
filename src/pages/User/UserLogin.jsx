@@ -2,8 +2,9 @@ import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
 import "../../styles/login.css";
+import { NavLink } from "react-router-dom";
 
-export default function UserLogin() {
+export default function UserLogin({ onSignUpClick }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -51,7 +52,11 @@ export default function UserLogin() {
           />
           {error && <msg className="error-message">{error}</msg>}
           <button type="submit">Login</button>
-          <p>No User Account? Sign Up Instead.</p>
+          <p>
+            <NavLink to="#" onClick={onSignUpClick}>
+              No User Account? Sign Up Instead.
+            </NavLink>
+          </p>
         </form>
       </div>
     </>

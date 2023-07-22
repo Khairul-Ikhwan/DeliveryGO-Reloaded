@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
 import "../../styles/forms.css";
 
-export default function UserSignUp() {
+export default function UserSignUp({ onSignUpClick }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
@@ -154,6 +154,11 @@ export default function UserSignUp() {
         <button type="submit" disabled={isSubmitDisabled}>
           Register
         </button>
+        <p>
+          <NavLink to="#" onClick={onSignUpClick}>
+            Have a user account? Login here!
+          </NavLink>
+        </p>
       </form>
     </div>
   );
