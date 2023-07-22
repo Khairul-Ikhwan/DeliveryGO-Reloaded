@@ -100,10 +100,9 @@
     color: red
 }
 
-.forms-message {
+.error-message {
     color: red
 }
-
 @media (max-width: 900px) {
     .forms-container {
         padding: 2%;
