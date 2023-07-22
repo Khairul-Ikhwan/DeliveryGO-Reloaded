@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import JobsCard from "./JobsCard";
+import { sendRequest } from "../../helpers/send-helper";
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState([]);
@@ -11,12 +12,10 @@ export default function JobsPage() {
 
   async function fetchJobs() {
     try {
-      setTimeout(async () => {
-        const response = await fetch("/api/jobs/getJobs");
-        const data = await response.json();
-        setJobs(data.jobs);
-        setLoading(false);
-      }, 500);
+      setLoading(true);
+      const data = await sendRequest("/api/jobs/getJobs", "GET");
+      setJobs(data.jobs);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching jobs:", error);
       setLoading(false);
@@ -28,6 +27,37 @@ export default function JobsPage() {
     fetchJobs();
   };
 
+  async function handleAssignDriver(jobId) {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        // Handle the case where the token is not available or expired
+        console.error("Invalid or expired token");
+        setLoading(false);
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      const response = await sendRequest(
+        "/api/jobs/assign",
+        "POST",
+        { jobId },
+        headers
+      );
+      handleRefreshClick();
+      setLoading(false);
+    } catch (error) {
+      console.error("Error assigning driver:", error);
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <div>
@@ -37,10 +67,16 @@ export default function JobsPage() {
         </button>
         {loading ? (
           <p>Loading jobs...</p>
+        ) : jobs.length === 0 ? (
+          <p>No Jobs available</p>
         ) : (
           <div className="job-container">
             {jobs.map((job) => (
-              <JobsCard key={job.id} job={job} />
+              <JobsCard
+                key={job.id}
+                job={job}
+                onAssignDriver={handleAssignDriver}
+              />
             ))}
           </div>
         )}

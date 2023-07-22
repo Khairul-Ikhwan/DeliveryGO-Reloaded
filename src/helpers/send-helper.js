@@ -1,4 +1,4 @@
-export async function sendRequest(url, method = 'GET', body = null, headers = {}) {
+export async function sendRequest(url, method, body = null, headers = {}) {
   try {
     const options = {
       method,
@@ -7,8 +7,8 @@ export async function sendRequest(url, method = 'GET', body = null, headers = {}
         Authorization: headers.Authorization, // Include the Authorization header if provided
       },
       body: body ? JSON.stringify(body) : null,
+      
     };
-
     const response = await fetch(url, options);
     const data = await response.json();
 

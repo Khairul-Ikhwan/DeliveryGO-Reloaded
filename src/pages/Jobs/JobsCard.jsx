@@ -1,7 +1,7 @@
 import "../../styles/jobs.css";
 import { format } from "date-fns";
 
-export default function JobsCard({ job }) {
+export default function JobsCard({ job, onAssignDriver }) {
   const {
     id,
     type_id,
@@ -49,6 +49,7 @@ export default function JobsCard({ job }) {
         <p>Price: ${parseFloat(price).toFixed(2)}</p>
         <p>Time: {convertTo12HourFormat(time)}</p>
         <p>Date: {new Date(date).toLocaleDateString()}</p>
+        <button onClick={() => onAssignDriver(job.id)}>Accept Job</button>
       </div>
     </>
   );

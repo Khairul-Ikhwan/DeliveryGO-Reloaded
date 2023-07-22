@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/database');
+const {verifyToken} = require('../utilities/jwt');
 const googleAPIKey = process.env.MAPS_API_KEY;
 
 async function createJob(req, res) {
@@ -76,29 +77,40 @@ async function createJob(req, res) {
 }
 
 async function assignDriver(req, res) {
-    try {
-      const { jobId, driverId } = req.body;
-  
-      const updateQuery = `
-        UPDATE jobs
-        SET driver_id = $1
-        WHERE id = $2
-        RETURNING *
-      `;
-      const updateValues = [driverId, jobId];
-  
-      const result = await pool.query(updateQuery, updateValues);
-      const updatedJob = result.rows[0];
-  
-      res.status(200).json({
-        message: 'Job updated successfully',
-        job: updatedJob
-      });
-    } catch (error) {
-      console.error('Error updating job:', error);
-      res.status(500).json({ error: 'Internal server error' });
+  try {
+    const { jobId } = req.body;
+    const rawToken = req.headers.authorization;
+    const token = rawToken.replace("Bearer ", "");
+    const decodedToken = verifyToken(token);
+
+    if (!decodedToken || !decodedToken.driverId) {
+      res.status(401).json({ error: 'Invalid or expired token.' });
+      return;
     }
+
+    const updateQuery = `
+      UPDATE jobs
+      SET driver_id = $1, status = 'Assigned'
+      WHERE id = $2
+      RETURNING *
+    `;
+    const updateValues = [decodedToken.driverId, jobId];
+
+    const result = await pool.query(updateQuery, updateValues);
+    const updatedJob = result.rows[0];
+
+    res.status(200).json({
+      message: 'Job updated successfully',
+      job: updatedJob
+    });
+  } catch (error) {
+    console.error('Error updating job:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
+}
+
+
+
 
   async function getDistAndPrice(req, res) {
     try {
@@ -158,7 +170,6 @@ async function assignDriver(req, res) {
       const jobs = result.rows;
   
       res.status(200).json({ jobs });
-      console.log(jobs)
     } catch (error) {
       console.error('Error retrieving jobs:', error);
       res.status(500).json({ error: 'Internal server error' });
