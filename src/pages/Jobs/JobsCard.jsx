@@ -1,7 +1,7 @@
 import "../../styles/jobs.css";
 import { format } from "date-fns";
 
-export default function JobsCard({ job, onAssignDriver }) {
+export default function JobsCard({ job, onButtonClick, buttonText }) {
   const {
     id,
     type_id,
@@ -72,7 +72,7 @@ export default function JobsCard({ job, onAssignDriver }) {
             {convertTo12HourFormat(time)}
           </p>
         </div>
-        <button onClick={() => onAssignDriver(job.id)}>Accept Job</button>
+        <button onClick={() => onButtonClick(job.id)}>{buttonText}</button>
       </div>
     </>
   );

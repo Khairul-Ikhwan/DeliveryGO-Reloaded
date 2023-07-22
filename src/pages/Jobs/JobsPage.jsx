@@ -15,7 +15,15 @@ export default function JobsPage() {
     try {
       setLoading(true);
       const data = await sendRequest("/api/jobs/getJobs", "GET");
-      setJobs(data.jobs);
+
+      // Sort the jobs based on time and date
+      const sortedJobs = data.jobs.sort((a, b) => {
+        const dateTimeA = `${a.date} ${a.time}`;
+        const dateTimeB = `${b.date} ${b.time}`;
+        return dateTimeA.localeCompare(dateTimeB);
+      });
+
+      setJobs(sortedJobs);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching jobs:", error);
@@ -34,17 +42,14 @@ export default function JobsPage() {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        // Handle the case where the token is not available or expired
         console.error("Invalid or expired token");
         setLoading(false);
         return;
       }
-
       const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       };
-
       const response = await sendRequest(
         "/api/jobs/assign",
         "POST",
@@ -78,7 +83,6 @@ export default function JobsPage() {
             <option value="Car">Car</option>
             <option value="Motorcycle">Motorcycle</option>
             <option value="Van">Van</option>
-            {/* Add more job types as options */}
           </select>
         </div>
         <button onClick={handleRefreshClick} disabled={loading}>
@@ -94,7 +98,8 @@ export default function JobsPage() {
               <JobsCard
                 key={job.id}
                 job={job}
-                onAssignDriver={handleAssignDriver}
+                onButtonClick={handleAssignDriver}
+                buttonText="Accept Job"
               />
             ))}
           </div>
