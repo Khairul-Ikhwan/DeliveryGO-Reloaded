@@ -139,7 +139,7 @@ export default function DriverSignUp({ onSignUpClick }) {
             required
           />
         </div>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <msg className="error-message">{errorMessage}</msg>}
         <button type="submit" disabled={isSubmitDisabled}>
           Register
         </button>
