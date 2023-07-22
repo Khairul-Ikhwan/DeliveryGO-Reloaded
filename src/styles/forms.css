@@ -97,13 +97,14 @@
 .forms-container msg {
     display: inline-block;
     align-self: center;
+    color: red
 }
 
 .forms-message {
     color: red
 }
 
-@media (max-width: 850px) {
+@media (max-width: 900px) {
     .forms-container {
         padding: 2%;
         box-sizing: border-box;
