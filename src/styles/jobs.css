@@ -18,7 +18,9 @@
     text-align: left;
     background-color: lightblue;
 }
-
+.job-card p {
+    font-size: 0.85rem;
+}
 .job-card span {
     text-align: center;
 }
