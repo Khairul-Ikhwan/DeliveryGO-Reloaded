@@ -5,7 +5,7 @@ export default function LogOutButton({ path }) {
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate(path);
   };
 
   return <button onClick={handleLogOut}>Log Out</button>;

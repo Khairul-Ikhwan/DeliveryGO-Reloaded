@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../helpers/send-helper";
 import LogOutButton from "../../components/Login/LogOutButton";
+import "../../styles/dashboard.css";
 
 export default function DriverDashboard() {
   const [driver, setDriver] = useState(null);
@@ -42,13 +43,13 @@ export default function DriverDashboard() {
   }
 
   return (
-    <>
-      <h1>This is {driver.driverName}'s dashboard</h1>
+    <div className="dashboard">
+      <img src={driver.driverPfp} alt="Profile" />
       <h3>Welcome {driver.driverName}!</h3>
       <p>Email: {driver.driverEmail}</p>
       <p>Phone: {driver.driverPhone}</p>
-      <img src={driver.driverPfp} alt="Profile" />
-      <LogOutButton path="/driver/login" />
-    </>
+
+      <LogOutButton path="/driver" />
+    </div>
   );
 }
