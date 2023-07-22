@@ -68,9 +68,15 @@ export default function JobsPage() {
     setFilter(event.target.value);
   };
 
+  const isDateAfterToday = (date) => {
+    const today = new Date();
+    const jobDate = new Date(date);
+    return jobDate >= today;
+  };
+
   const filteredJobs = filter
-    ? jobs.filter((job) => job.type_id === filter)
-    : jobs;
+    ? jobs.filter((job) => job.type_id === filter && isDateAfterToday(job.date))
+    : jobs.filter((job) => isDateAfterToday(job.date));
 
   return (
     <>
