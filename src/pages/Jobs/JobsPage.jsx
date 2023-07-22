@@ -5,6 +5,7 @@ import { sendRequest } from "../../helpers/send-helper";
 export default function JobsPage() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     fetchJobs();
@@ -58,20 +59,38 @@ export default function JobsPage() {
     }
   }
 
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const filteredJobs = filter
+    ? jobs.filter((job) => job.type_id === filter)
+    : jobs;
+
   return (
     <>
       <div>
         <h3>This is the jobs page</h3>
+        <div>
+          <label>Filter by Job Type:</label>
+          <select value={filter} onChange={handleFilterChange}>
+            <option value="">All</option>
+            <option value="Car">Car</option>
+            <option value="Motorcycle">Motorcycle</option>
+            <option value="Van">Van</option>
+            {/* Add more job types as options */}
+          </select>
+        </div>
         <button onClick={handleRefreshClick} disabled={loading}>
           {loading ? "Loading..." : "Refresh Jobs"}
         </button>
         {loading ? (
           <p>Loading jobs...</p>
-        ) : jobs.length === 0 ? (
+        ) : filteredJobs.length === 0 ? (
           <p>No Jobs available</p>
         ) : (
           <div className="job-container">
-            {jobs.map((job) => (
+            {filteredJobs.map((job) => (
               <JobsCard
                 key={job.id}
                 job={job}
