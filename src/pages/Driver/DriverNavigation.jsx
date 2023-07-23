@@ -28,7 +28,7 @@ export default function DriverNavigation() {
           </div>
         </NavLink>
 
-        <NavLink to="/driver/dashboard">
+        <NavLink to="/driver">
           <div className="navigation">
             <h3>
               My <br /> Profile

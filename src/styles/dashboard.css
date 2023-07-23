@@ -29,6 +29,19 @@
 
 
 @media (max-width: 900px) {
+    .navigation-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        font-size: 1.1rem;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-color: #fff; /* You can set a background color to the navigation container if needed */
+        z-index: 999; /* Use a high z-index to ensure the navigation appears on top of other elements */
+      }
+
    .navigation {
     font-size: 0.8rem;
     padding: 5%;
