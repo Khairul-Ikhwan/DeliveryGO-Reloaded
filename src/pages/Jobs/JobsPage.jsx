@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import JobsCard from "./JobsCard";
 import { sendRequest } from "../../helpers/send-helper";
 
@@ -6,6 +7,8 @@ export default function JobsPage() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchJobs();
@@ -59,6 +62,7 @@ export default function JobsPage() {
       );
       handleRefreshClick();
       setLoading(false);
+      navigate("/driver/dashboard/active-jobs");
     } catch (error) {
       console.error("Error assigning driver:", error);
       setLoading(false);

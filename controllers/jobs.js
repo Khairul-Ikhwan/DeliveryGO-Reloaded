@@ -175,8 +175,40 @@ async function assignDriver(req, res) {
       res.status(500).json({ error: 'Internal server error' });
     }
   }
+
+  async function driverJobs(req, res) {
+    try {
+      // Get the driverId from the decoded token
+      const token = req.headers.authorization.split(' ')[1];
+      const decodedToken = verifyToken(token);
+  
+      if (!decodedToken || !decodedToken.driverId) {
+        res.status(401).json({ error: 'Invalid or expired token.' });
+        return;
+      }
+  
+      const driverId = decodedToken.driverId;
+  
+      const status = 'Assigned';
+  
+      const query = `
+        SELECT *
+        FROM jobs
+        WHERE status = $1 AND driver_id = $2
+      `;
+  
+      const result = await pool.query(query, [status, driverId]);
+      const jobs = result.rows;
+  
+      res.status(200).json({ jobs });
+    } catch (error) {
+      console.error('Error retrieving jobs:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
   
   
   
 
-module.exports = { createJob, assignDriver, getDistAndPrice, getJobs };
+module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs,  };

@@ -12,5 +12,10 @@ router.post('/login', (req, res) => {
   userCtrl.userLogIn(req, res, pool)
 })
 
+router.get('/getUser/:userId', (req, res) => {
+  const userId = req.params.userId;
+  userCtrl.getUserDetails(req, res, pool, userId);
+});
+
 
 module.exports = router;

@@ -3,12 +3,14 @@ import "../../styles/dashboard.css";
 import JobsPage from "../Jobs/JobsPage";
 import DriverDetails from "./DriverDetails";
 import DriverNavigation from "./DriverNavigation";
+import DriverAcceptedJobs from "./DriverAcceptedJobs";
 
 export default function DriverDashboard() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<JobsPage />} />
+        <Route path="/*" element={<JobsPage />} />
+        <Route path="/active-jobs" element={<DriverAcceptedJobs />} />
         <Route path="/profile" element={<DriverDetails />} />
       </Routes>
       <DriverNavigation />

@@ -20,4 +20,12 @@ router.post('/create', (req, res) => {
     jobsCtrl.getJobs(req, res, pool);
   });
 
+  router.get('/driverJobs', (req, res) => {
+    jobsCtrl.driverJobs(req, res, pool);
+  });
+
+  router.get('/findCustomer', (req, res) => {
+    jobsCtrl.findCustomer(req, res, pool);
+  });
+
 module.exports = router;

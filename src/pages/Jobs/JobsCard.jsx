@@ -1,7 +1,12 @@
-import "../../styles/jobs.css";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
+import { sendRequest } from "../../helpers/send-helper";
+import "../../styles/jobs.css";
 
 export default function JobsCard({ job, onButtonClick, buttonText }) {
+  const [userDetails, setUserDetails] = useState(null);
+  const [showAddressUnit, setShowAddressUnit] = useState(false);
+
   const {
     id,
     type_id,
@@ -21,7 +26,26 @@ export default function JobsCard({ job, onButtonClick, buttonText }) {
     status,
     time,
     date,
+    user_id,
   } = job;
+
+  useEffect(() => {
+    // Fetch user details only if the job is assigned
+    if (status === "Assigned") {
+      fetchUserDetails(user_id);
+    }
+    // Set showAddressUnit based on the job status
+    setShowAddressUnit(status === "Assigned");
+  }, [status, user_id]);
+
+  const fetchUserDetails = async (userId) => {
+    try {
+      const data = await sendRequest(`/api/users/getUser/${userId}`, "GET");
+      setUserDetails(data.user);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
 
   const convertTo12HourFormat = (timeString) => {
     const formattedTime = format(
@@ -46,14 +70,20 @@ export default function JobsCard({ job, onButtonClick, buttonText }) {
           <span>
             <h4>Pickup Address:</h4> <br />
             {pickup_address_street} <br />
-            {pickup_address_unit}, S{pickup_address_postal} <br />
+            {showAddressUnit && pickup_address_unit
+              ? `${pickup_address_unit}, `
+              : ""}
+            S{pickup_address_postal} <br />
             {pickup_address_building_name}
           </span>
           <p>|</p>
           <span>
             <h4>Delivery Address:</h4> <br />
             {delivery_address_street} <br />
-            {delivery_address_unit}, S{delivery_address_postal} <br />
+            {showAddressUnit && delivery_address_unit
+              ? `${delivery_address_unit}, `
+              : ""}
+            S{delivery_address_postal} <br />
             {delivery_address_building_name}
           </span>
         </div>
@@ -71,6 +101,20 @@ export default function JobsCard({ job, onButtonClick, buttonText }) {
             Time: <br />
             {convertTo12HourFormat(time)}
           </p>
+        </div>
+        <div className="user-field">
+          {status === "Assigned" ? (
+            userDetails ? (
+              <>
+                <p>Name: {userDetails.userName}</p>
+                <p>Contact: {userDetails.userPhone}</p>
+              </>
+            ) : (
+              <p>Customer Details Not Available</p>
+            )
+          ) : (
+            <p>Customer Details Available On Accept</p>
+          )}
         </div>
         <button onClick={() => onButtonClick(job.id)}>{buttonText}</button>
       </div>

@@ -88,6 +88,26 @@ async function userLogIn(req, res) {
   }
 }
 
+async function getUserDetails(req, res, pool, userId) {
+  try {
+    const query = `
+      SELECT * FROM users WHERE id = $1;
+    `;
+    const result = await pool.query(query, [userId]);
+    const user = result.rows[0];
+
+    if (!user) {
+      res.status(404).json({ error: 'User not found.' });
+      return;
+    }
+
+    // You can choose to return only specific user details here, depending on your use case
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
 
 
-module.exports = { createUser, userLogIn };
+module.exports = { createUser, userLogIn, getUserDetails };

@@ -6,6 +6,7 @@
     box-sizing: border-box;
     gap: 10px;
     background-color: lightgray;
+    min-height: 150px;
 }
 .utility-panel h3{
     text-align: center;
@@ -61,7 +62,9 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    padding: .5%;
+    padding: 5%;
+    box-sizing: border-box;
+    padding-top: 2%;
 }
 
 .job-card {
@@ -143,6 +146,17 @@
     justify-items: center;
     background-color: white;
     text-align: center;
+    font-size: 0.8rem;
+}
+
+.user-field {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 15px;
+    justify-content: space-around;
+    padding: 3%;
+    box-sizing: border-box;
 }
 
 .loader {

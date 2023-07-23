@@ -12,7 +12,7 @@ export default function DriverNavigation() {
           </div>
         </NavLink>
 
-        <NavLink to="/driver/dashboard">
+        <NavLink to="/driver/dashboard/active-jobs">
           <div className="navigation">
             <h3>
               Accepted <br /> Jobs
