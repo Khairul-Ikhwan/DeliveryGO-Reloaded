@@ -159,6 +159,18 @@
     box-sizing: border-box;
 }
 
+.jobs-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+.jobs-button button {
+  width: 45%;
+    
+}
+
 .loader {
     display: flex;
     justify-content: center;

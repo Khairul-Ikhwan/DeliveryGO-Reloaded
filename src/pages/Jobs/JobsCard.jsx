@@ -3,7 +3,13 @@ import { format } from "date-fns";
 import { sendRequest } from "../../helpers/send-helper";
 import "../../styles/jobs.css";
 
-export default function JobsCard({ job, onButtonClick, buttonText }) {
+export default function JobsCard({
+  job,
+  onButtonClick,
+  onButtonClick2,
+  buttonText,
+  buttonText2,
+}) {
   const [userDetails, setUserDetails] = useState(null);
   const [showAddressUnit, setShowAddressUnit] = useState(false);
 
@@ -116,7 +122,14 @@ export default function JobsCard({ job, onButtonClick, buttonText }) {
             <p>Customer Details Available On Accept</p>
           )}
         </div>
-        <button onClick={() => onButtonClick(job.id)}>{buttonText}</button>
+        <div className="jobs-button">
+          {buttonText ? (
+            <button onClick={() => onButtonClick(job.id)}>{buttonText}</button>
+          ) : null}
+          {buttonText2 ? (
+            <button onClick={() => onButtonClick(job.id)}>{buttonText2}</button>
+          ) : null}
+        </div>
       </div>
     </>
   );

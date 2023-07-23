@@ -65,6 +65,8 @@ export default function DriverAcceptedJobs() {
               job={job}
               buttonText={"Mark Completed"}
               onButtonClick={handleClick}
+              //   buttonText2={"Release Job"}
+              //   onButtonClick2={handleClick}
             />
           ))}
         </div>
