@@ -109,7 +109,7 @@ export default function JobsCard({
           </p>
         </div>
         <div className="user-field">
-          {status === "Assigned" ? (
+          {status === "Assigned" || status === "Complete" ? (
             userDetails ? (
               <>
                 <p>Name: {userDetails.userName}</p>

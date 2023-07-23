@@ -24,8 +24,17 @@ router.post('/create', (req, res) => {
     jobsCtrl.driverJobs(req, res, pool);
   });
 
+  router.get('/driverComplete', (req, res) => {
+    jobsCtrl.driverCompleteJobs(req, res, pool);
+  });
+
   router.get('/findCustomer', (req, res) => {
     jobsCtrl.findCustomer(req, res, pool);
   });
+
+  router.post('/complete', (req, res) => {
+    jobsCtrl.complete(req, res, pool);
+  });
+
 
 module.exports = router;

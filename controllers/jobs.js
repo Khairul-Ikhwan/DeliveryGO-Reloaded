@@ -206,9 +206,74 @@ async function assignDriver(req, res) {
       res.status(500).json({ error: 'Internal server error' });
     }
   }
+
+  async function driverCompleteJobs(req, res) {
+    try {
+      // Get the driverId from the decoded token
+      const token = req.headers.authorization.split(' ')[1];
+      const decodedToken = verifyToken(token);
   
+      if (!decodedToken || !decodedToken.driverId) {
+        res.status(401).json({ error: 'Invalid or expired token.' });
+        return;
+      }
+  
+      const driverId = decodedToken.driverId;
+  
+      const status = 'Complete';
+  
+      const query = `
+        SELECT *
+        FROM jobs
+        WHERE status = $1 AND driver_id = $2
+      `;
+  
+      const result = await pool.query(query, [status, driverId]);
+      const jobs = result.rows;
+  
+      res.status(200).json({ jobs });
+    } catch (error) {
+      console.error('Error retrieving jobs:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
+  async function complete(req, res) {
+    try {
+      const { jobId } = req.body;
+      const rawToken = req.headers.authorization;
+      const token = rawToken.replace("Bearer ", "");
+      const decodedToken = verifyToken(token);
+  
+      if (!decodedToken || !decodedToken.driverId) {
+        res.status(401).json({ error: 'Invalid or expired token.' });
+        return;
+      }
+  
+      const updateQuery = `
+        UPDATE jobs
+        SET driver_id = $1, status = 'Complete'
+        WHERE id = $2
+        RETURNING *
+      `;
+      const updateValues = [decodedToken.driverId, jobId];
+  
+      const result = await pool.query(updateQuery, updateValues);
+      const updatedJob = result.rows[0];
+  
+      res.status(200).json({
+        message: 'Job completed successfully',
+        job: updatedJob
+      });
+    } catch (error) {
+      console.error('Error completing job:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
+  module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete };
   
   
   
 
-module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs,  };
+module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete, driverCompleteJobs };

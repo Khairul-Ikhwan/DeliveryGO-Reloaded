@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import JobsCard from "../Jobs/JobsCard";
 import { sendRequest } from "../../helpers/send-helper";
-import "../../styles/acceptedJobs.css";
+import "../../styles/jobs.css";
 
 export default function DriverAcceptedJobs() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchJobs();
@@ -42,8 +44,33 @@ export default function DriverAcceptedJobs() {
     }
   }
 
-  function handleClick() {
-    alert("Button Clicked!");
+  async function handleComplete(jobId) {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Invalid or expired token");
+        setLoading(false);
+        return;
+      }
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+      const response = await sendRequest(
+        "/api/jobs/complete",
+        "POST",
+        { jobId },
+        headers
+      );
+      setLoading(false);
+      fetchJobs();
+      navigate("/driver/dashboard/active-jobs");
+    } catch (error) {
+      console.error("Error assigning driver:", error);
+      setLoading(false);
+    }
   }
 
   return (
@@ -64,7 +91,7 @@ export default function DriverAcceptedJobs() {
               key={job.id}
               job={job}
               buttonText={"Mark Completed"}
-              onButtonClick={handleClick}
+              onButtonClick={handleComplete}
               //   buttonText2={"Release Job"}
               //   onButtonClick2={handleClick}
             />
