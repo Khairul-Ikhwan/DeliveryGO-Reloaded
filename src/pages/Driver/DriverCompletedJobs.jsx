@@ -41,7 +41,9 @@ export default function DriverCompletedJobs() {
       {loading ? (
         <p>Loading jobs...</p>
       ) : completedJobs.length === 0 ? (
-        <p>No Completed Jobs</p>
+        <div className="header">
+          <p>No Completed Jobs</p>
+        </div>
       ) : (
         <div className="job-container">
           {completedJobs.map((job) => (
