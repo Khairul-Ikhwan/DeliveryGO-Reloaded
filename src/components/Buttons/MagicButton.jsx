@@ -1,4 +1,10 @@
-export default function MagicButton({ onClick, label, disabled, className }) {
+export default function MagicButton({
+  onClick,
+  label,
+  disabled,
+  className,
+  isLoading,
+}) {
   return (
     <button
       type="button"
@@ -6,7 +12,7 @@ export default function MagicButton({ onClick, label, disabled, className }) {
       onClick={onClick}
       disabled={disabled}
     >
-      {label}
+      {isLoading ? "Loading" : label}
     </button>
   );
 }

@@ -9,6 +9,9 @@ export default function JobForm() {
   const [showDelivery, setShowDelivery] = useState(false);
   const [showPriceAndDistance, setShowPriceAndDistance] = useState(false);
   const [showMisc, setShowMisc] = useState(false);
+  const [isLoadingPrice, setIsLoadingPrice] = useState(false);
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const [jobData, setJobData] = useState({
     jobType: "Motorcycle",
@@ -63,6 +66,7 @@ export default function JobForm() {
   }, []);
 
   const handleCheckPrice = async (e) => {
+    setIsLoadingPrice(true);
     const data = {
       deliveryPostal: jobData.deliveryPostal,
       pickupPostal: jobData.pickupPostal,
@@ -70,6 +74,7 @@ export default function JobForm() {
     };
 
     try {
+      await delay(500);
       const response = await sendRequest("/api/jobs/getDistance", "POST", data);
       const { computedPrice, distanceValue } = response;
       setJobData((prevJobData) => ({
@@ -77,7 +82,6 @@ export default function JobForm() {
         price: computedPrice,
         totalDistance: distanceValue,
       }));
-      alert("Price Checked");
     } catch (error) {
       console.error("Error checking price:", error);
       if (error.message === "Network Error") {
@@ -87,6 +91,8 @@ export default function JobForm() {
       } else {
         alert("Error checking price:", error);
       }
+    } finally {
+      setIsLoadingPrice(false);
     }
   };
 
@@ -97,7 +103,7 @@ export default function JobForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Form Submit!!!");
+    setIsLoadingSubmit(true);
 
     try {
       const createJobResponse = await sendRequest(
@@ -108,6 +114,8 @@ export default function JobForm() {
     } catch (error) {
       console.error("Error creating job:", error);
       alert("Error creating job:", error);
+    } finally {
+      setIsLoadingSubmit(false);
     }
   };
 
@@ -250,7 +258,11 @@ export default function JobForm() {
                 required
               />
               <h4>Recommended Price: ${jobData.price}</h4>
-              <MagicButton label="Check Price" onClick={handleCheckPrice} />
+              <MagicButton
+                label="Check Price"
+                onClick={handleCheckPrice}
+                isLoading={isLoadingPrice}
+              />
             </div>
           )}
         </div>
@@ -307,7 +319,11 @@ export default function JobForm() {
         </div>
 
         <div className="button-container magic">
-          <MagicButton label="Submit" onClick={handleSubmit} />
+          <MagicButton
+            label="Submit"
+            onClick={handleSubmit}
+            isLoading={isLoadingSubmit}
+          />
         </div>
       </form>
     </div>
