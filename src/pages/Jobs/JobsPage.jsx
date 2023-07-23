@@ -14,6 +14,7 @@ export default function JobsPage() {
   async function fetchJobs() {
     try {
       setLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 500));
       const data = await sendRequest("/api/jobs/getJobs", "GET");
 
       // Sort the jobs based on time and date
@@ -81,23 +82,32 @@ export default function JobsPage() {
   return (
     <>
       <div>
-        <h3>This is the jobs page</h3>
-        <div>
-          <label>Filter by Job Type:</label>
-          <select value={filter} onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="Car">Car</option>
-            <option value="Motorcycle">Motorcycle</option>
-            <option value="Van">Van</option>
-          </select>
+        <div className="utility-panel">
+          <h3>All Available Jobs</h3>
+          <div>
+            <span>
+              <label>Filter by Job Type: </label>
+              <select value={filter} onChange={handleFilterChange}>
+                <option value="">All</option>
+                <option value="Car">Car</option>
+                <option value="Motorcycle">Motorcycle</option>
+                <option value="Van">Van</option>
+              </select>
+            </span>
+            <span>
+              <button onClick={handleRefreshClick} disabled={loading}>
+                {loading ? <p>Loading Jobs...</p> : <p>Refresh Jobs</p>}
+              </button>
+            </span>
+          </div>
         </div>
-        <button onClick={handleRefreshClick} disabled={loading}>
-          {loading ? "Loading..." : "Refresh Jobs"}
-        </button>
+
         {loading ? (
-          <p>Loading jobs...</p>
+          <div className="loader"></div>
         ) : filteredJobs.length === 0 ? (
-          <p>No Jobs available</p>
+          <div className="loader">
+            <p>No Jobs Available</p>
+          </div>
         ) : (
           <div className="job-container">
             {filteredJobs.map((job) => (

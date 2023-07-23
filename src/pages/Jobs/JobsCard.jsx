@@ -43,19 +43,19 @@ export default function JobsCard({ job, onButtonClick, buttonText }) {
           <p>{id}</p>
         </span>
         <div className="address-field">
-          <p>
+          <span>
             <h4>Pickup Address:</h4> <br />
             {pickup_address_street} <br />
             {pickup_address_unit}, S{pickup_address_postal} <br />
             {pickup_address_building_name}
-          </p>
+          </span>
           <p>|</p>
-          <p>
+          <span>
             <h4>Delivery Address:</h4> <br />
             {delivery_address_street} <br />
             {delivery_address_unit}, S{delivery_address_postal} <br />
             {delivery_address_building_name}
-          </p>
+          </span>
         </div>
         <div className="misc-info">
           <p>

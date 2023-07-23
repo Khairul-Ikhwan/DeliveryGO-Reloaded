@@ -9,12 +9,11 @@ import DriverDashboard from "../Driver/DriverDashboard";
 export default function App() {
   return (
     <main className="App">
-      <DesktopNav />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/driver" element={<DriverPage />} />
         <Route path="/user" element={<UserPage />} />
-        <Route path="/driver/dashboard" element={<DriverDashboard />} />
+        <Route path="/driver/dashboard/*" element={<DriverDashboard />} />
       </Routes>
     </main>
   );
