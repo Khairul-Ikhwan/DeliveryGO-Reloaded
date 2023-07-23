@@ -17,5 +17,9 @@ router.get('/getUser/:userId', (req, res) => {
   userCtrl.getUserDetails(req, res, pool, userId);
 });
 
+router.post('/getUser', (req, res) => {
+  userCtrl.getUserDetails(req, res, pool);
+});
+
 
 module.exports = router;

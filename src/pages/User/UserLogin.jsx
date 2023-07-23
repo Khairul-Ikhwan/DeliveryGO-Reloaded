@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { sendRequest } from "../../helpers/send-helper";
 import { NavLink } from "react-router-dom";
 import "../../styles/forms.css";
@@ -8,7 +8,7 @@ export default function UserLogin({ onSignUpClick }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,9 +22,7 @@ export default function UserLogin({ onSignUpClick }) {
       console.log(response);
 
       localStorage.setItem("token", response.token);
-      alert("Login Successful!");
-      // Navigate to a new page if needed
-      // navigate('/dashboard');
+      navigate("/user/dashboard");
     } catch (error) {
       console.error("Error logging in:", error);
       setError("Invalid email or password. Please try again.");

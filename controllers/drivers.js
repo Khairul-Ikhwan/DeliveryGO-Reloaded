@@ -13,9 +13,7 @@ async function createDriver(req, res) {
     const values = [driverId, driverName, driverEmail, driverPhone, driverPfp, hashedPassword];
     const result = await pool.query(query, values);
     const insertedDriver = result.rows[0];
-
-    // Generate JWT token
-    const token = generateToken(insertedDriver.id);
+    const token = generateToken(insertedDriver.id, 'driver');
 
     res.status(201).json({
       message: 'Driver created successfully',
@@ -182,7 +180,7 @@ async function driverLogIn(req, res) {
       });
     }
 
-    const token = generateToken(driver.id);
+    const token = generateToken(driver.id, 'driver');
     const { id, driverName, driverPhone, driverPfp } = driver;
 
     res.status(200).json({

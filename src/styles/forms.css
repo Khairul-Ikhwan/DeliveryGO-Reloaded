@@ -1,3 +1,4 @@
+
 .forms-container {
     margin: 1% 0 1% 0;
     display: flex;
@@ -6,6 +7,8 @@
     height: 100%;
     align-items: center;
     font-size: .9rem;
+    flex-direction: column;
+    margin-bottom: 5%;
 }
 
 .forms-container header {
@@ -31,11 +34,16 @@
     
 }
 
+.forms-container fieldset {
+    padding: 2%;
+    box-sizing: border-box;
+}
+
 .forms-container div {
     display: grid;
 }
 
-.forms-container input {
+.forms-container input , textarea {
     border-radius: 5px;
     background: rgb(249, 250, 250);
     border: 1px solid rgb(181, 189, 196);
@@ -56,6 +64,13 @@
     box-shadow: 1px 1px 0 #3b49df;
 }
 
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
 .forms-container button {
     display: inline-block;
     outline: 0;
@@ -72,6 +87,11 @@
     width: 50%;
     align-self: center;
 }
+
+.magic {
+    gap: 1.1rem;
+}
+
 
 .forms-container button:hover{
     transform: translateY(-2px);
@@ -100,9 +120,63 @@
     color: red
 }
 
+.forms-container select {
+    height: 50px;
+    border-radius: 15px;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
 .error-message {
     color: red
 }
+
+.accordion {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  .accordion-header h3 {
+    margin: 0;
+  }
+  
+  .accordion-icon {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .accordion-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2%;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .accordion-content input, textarea {
+    width: 400px;
+    box-sizing: border-box;
+  }
+  
+
+  .accordion.active .accordion-content {
+    display: block;
+  }
+
+
+
 @media (max-width: 900px) {
     .forms-container {
         padding: 2%;
@@ -114,4 +188,9 @@
             padding: 5%;
             box-sizing: border-box;
         }
+
+        .accordion-content input {
+            min-width: 300px;
+            max-width: 700px;
+          }
     }

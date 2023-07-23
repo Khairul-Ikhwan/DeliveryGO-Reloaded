@@ -1,8 +1,12 @@
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.JWT_KEY
 
-function generateToken(driverId) {
-  const token = jwt.sign({ driverId }, secretKey, { expiresIn: '24h' });
+function generateToken(id, userType) {
+  const payload = {
+    [`${userType}Id`]: id
+  };
+
+  const token = jwt.sign(payload, secretKey, { expiresIn: '24h' });
   return token;
 }
 

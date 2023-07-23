@@ -1,0 +1,9 @@
+.react-datepicker {
+    background-color: #f2f2f2;
+  }
+  
+  /* Example: Change the color of the selected date */
+  .react-datepicker__day--selected {
+    background-color: #007bff;
+    color: #fff;
+  }

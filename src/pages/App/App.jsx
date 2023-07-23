@@ -5,6 +5,7 @@ import HomePage from "./HomePage";
 import DriverPage from "../Driver/DriverPage";
 import UserPage from "../User/UserPage";
 import DriverDashboard from "../Driver/DriverDashboard";
+import UserDashBooard from "../User/UserDashboard";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/driver" element={<DriverPage />} />
         <Route path="/user" element={<UserPage />} />
         <Route path="/driver/dashboard/*" element={<DriverDashboard />} />
+        <Route path="/user/dashboard/*" element={<UserDashBooard />} />
       </Routes>
     </main>
   );
