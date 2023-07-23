@@ -16,8 +16,54 @@ a {
 .container {
   border: 1px solid red;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+
 }
 
 .section-container {
 
+}
+
+.page {
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page :only-child {
+  max-width: 100%;
+  min-width: 50%;
+}
+
+.driver {
+  background-image: url(https://cdn.pixabay.com/photo/2023/02/21/05/47/rain-7803539_1280.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+}
+
+.user {
+  background-image: url(https://cdn.pixabay.com/photo/2023/06/27/10/51/man-8091933_1280.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+}
+
+@media (max-width: 900px) {
+  .page :only-child {
+    min-width: 100%;
+  }
+
+  .driver {
+    background-position-x: center;
+  }
+
+  .user {
+    background-position-x: center;
+  }
 }

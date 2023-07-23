@@ -10,12 +10,12 @@ export default function UserPage() {
   };
 
   return (
-    <>
+    <div className="page user">
       {showSignUp ? (
         <UserSignUp onSignUpClick={handleToggleSignUp} />
       ) : (
         <UserLogin onSignUpClick={handleToggleSignUp} />
       )}
-    </>
+    </div>
   );
 }
