@@ -75,6 +75,11 @@ a {
   background-position-y: 55%;
 }
 
+.user button {
+  background-color: white;
+  color: black
+}
+
 @media (max-width: 900px) {
   .page :only-child {
     min-width: 100%;
