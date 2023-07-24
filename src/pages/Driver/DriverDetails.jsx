@@ -29,7 +29,7 @@ export default function DriverDetails() {
           "Network error occurred. Check your internet connection."
         );
       } else {
-        navigate("/");
+        navigate("/driver");
       }
     }
   }
@@ -48,7 +48,7 @@ export default function DriverDetails() {
       <h3>Welcome {driver.driverName}!</h3>
       <p>Email: {driver.driverEmail}</p>
       <p>Phone: {driver.driverPhone}</p>
-      <LogOutButton path="/driver" />
+      <LogOutButton path="/" />
     </div>
   );
 }
