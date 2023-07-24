@@ -9,10 +9,22 @@
     box-sizing: border-box;
     color: white;
     gap: 1.1rem;
+    text-align: left;
+}
+
+.hero-block div {
+    width: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 5%;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+    border-radius: 25px;
 }
 
 .user {
     flex-direction: row-reverse;
+    background-position-y: 25%;
+    text-align: right;
 }
 
 .hero-block a {
@@ -37,5 +49,31 @@
 }
 
 .hero-block button:hover {
-    background-color: blue;
+    background-color: lightcoral;
 }
+
+@media (max-width: 950px) {
+.hero-block {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+}
+
+    .hero-block div {
+        background-color: rgba(255, 255, 255, 0.5);
+        color: black;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+
+    .user button {
+        background-color: orange;
+    }
+
+    .hero-block button {
+        width: 150px;
+    }
+
+ }

@@ -10,6 +10,7 @@ export default function HomePage() {
           buttonText={"Driver"}
           link={"/driver"}
           headerText={"Drive with us"}
+          smallText={"Delivery, powered by the community"}
         />
       </div>
       <div className="container">
@@ -18,6 +19,7 @@ export default function HomePage() {
           buttonText={"Customer"}
           link={"/user"}
           headerText={"Book A Delivery"}
+          smallText={"Getting your products, right on time"}
         />
       </div>
     </>
