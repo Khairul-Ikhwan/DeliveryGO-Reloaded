@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import UserSignUp from "../User/UserSignUp";
 import UserLogin from "../User/UserLogin";
 import { sendRequest } from "../../helpers/send-helper";
+import "../App/App.css";
 
 export default function UserPage() {
   const [showSignUp, setShowSignUp] = useState(false);

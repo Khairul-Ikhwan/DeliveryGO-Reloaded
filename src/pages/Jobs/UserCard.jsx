@@ -3,14 +3,14 @@ import { format } from "date-fns";
 import { sendRequest } from "../../helpers/send-helper";
 import "../../styles/jobs.css";
 
-export default function JobsCard({
+export default function UserCard({
   job,
   onButtonClick,
   onButtonClick2,
   buttonText,
   buttonText2,
 }) {
-  const [userDetails, setUserDetails] = useState(null);
+  const [driverDetails, setDriverDetails] = useState(null);
   const [showAddressUnit, setShowAddressUnit] = useState(false);
 
   const {
@@ -33,20 +33,23 @@ export default function JobsCard({
     time,
     date,
     user_id,
+    driver_id,
   } = job;
 
   useEffect(() => {
     if (status === "Assigned") {
-      fetchUserDetails(user_id);
+      fetchDriverDetails(driver_id);
     }
     setShowAddressUnit(status === "Assigned");
-  }, [status, user_id]);
+  }, [status, driver_id]);
 
-  const fetchUserDetails = async (userId) => {
+  const fetchDriverDetails = async (driverId) => {
     try {
-      const data = await sendRequest(`/api/users/getUser/${userId}`, "GET");
-      setUserDetails(data.user);
-      console.log(data.user);
+      const data = await sendRequest(
+        `/api/drivers/find-driver/${driverId}`,
+        "GET"
+      );
+      setDriverDetails(data.driver);
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
@@ -109,16 +112,16 @@ export default function JobsCard({
         </div>
         <div className="user-field">
           {status === "Assigned" || status === "Complete" ? (
-            userDetails ? (
+            driverDetails ? (
               <>
-                <p>Name: {userDetails.userName}</p>
-                <p>Contact: {userDetails.userPhone}</p>
+                <p>Driver: {driverDetails.driverName}</p>
+                <p>Contact: {driverDetails.driverPhone}</p>
               </>
             ) : (
-              <p>Customer Details Not Available</p>
+              <p>Driver Details Not Available</p>
             )
           ) : (
-            <p>Customer Details Available On Accept</p>
+            <p>Driver Details Available When Assigned</p>
           )}
         </div>
         <div className="jobs-button">

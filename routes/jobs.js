@@ -24,6 +24,10 @@ router.post('/create', (req, res) => {
     jobsCtrl.driverJobs(req, res, pool);
   });
 
+  router.get('/userJobs', (req, res) => {
+    jobsCtrl.userJobs(req, res, pool);
+  });
+
   router.get('/driverComplete', (req, res) => {
     jobsCtrl.driverCompleteJobs(req, res, pool);
   });

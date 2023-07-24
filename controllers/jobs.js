@@ -207,6 +207,38 @@ async function assignDriver(req, res) {
     }
   }
 
+  async function userJobs(req, res) {
+    try {
+      // Get the userId from the decoded token
+      const token = req.headers.authorization.split(' ')[1];
+      const decodedToken = verifyToken(token);
+  
+      if (!decodedToken || !decodedToken.userId) {
+        res.status(401).json({ error: 'Invalid or expired token.' });
+        return;
+      }
+  
+      const userId = decodedToken.userId;
+  
+      // const status = 'Assigned';
+  
+      const query = `
+        SELECT *
+        FROM jobs
+        WHERE user_id = $1
+      `;
+  
+      const result = await pool.query(query, [userId]);
+      const jobs = result.rows;
+  
+      res.status(200).json({ jobs });
+    } catch (error) {
+      console.error('Error retrieving jobs:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
+
   async function driverCompleteJobs(req, res) {
     try {
       // Get the driverId from the decoded token
@@ -271,9 +303,9 @@ async function assignDriver(req, res) {
     }
   }
   
-  module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete };
+
   
   
   
 
-module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete, driverCompleteJobs };
+module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete, driverCompleteJobs, userJobs };

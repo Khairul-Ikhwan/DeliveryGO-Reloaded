@@ -18,6 +18,10 @@ router.post('/find-driver', (req, res) => {
     driverCtrl.findDriverById(req, res, pool);
   });
 
+router.get('/find-driver/:driverId', (req, res) => {
+    driverCtrl.findDriver(req, res, pool);
+  });
+
 // Route to unalive a driver
 router.delete('/delete', (req, res) => {
     driverCtrl.deleteDriverByEmail(req,res,pool)

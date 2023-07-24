@@ -77,6 +77,30 @@ async function findDriverById(req, res) {
   }
 }
 
+async function findDriver(req, res) {
+  try {
+    const { driverId } = req.params;
+
+    const query = 'SELECT * FROM drivers WHERE "id" = $1';
+    const result = await pool.query(query, [driverId]);
+    const driver = result.rows[0];
+
+    if (driver) {
+      res.status(200).json({
+        message: 'Driver found',
+        driver: driver
+      });
+    } else {
+      res.status(404).json({
+        message: 'Driver not found'
+      });
+    }
+  } catch (error) {
+    console.error('Error finding driver:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 async function deleteDriverByEmail(req, res) {
   try {
     const { email } = req.body;
@@ -235,4 +259,5 @@ module.exports = {
   updateDriverByEmail,
   driverLogIn,
   checkEmail,
+  findDriver
 }
