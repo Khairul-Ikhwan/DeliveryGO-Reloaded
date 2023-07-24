@@ -9,6 +9,7 @@ export default function UserCard({
   onButtonClick2,
   buttonText,
   buttonText2,
+  className,
 }) {
   const [driverDetails, setDriverDetails] = useState(null);
   const [showAddressUnit, setShowAddressUnit] = useState(false);
@@ -65,7 +66,7 @@ export default function UserCard({
 
   return (
     <>
-      <div className="job-card">
+      <div className={`job-card ${status === "Cancelled" ? "cancelled" : ""}`}>
         <header>
           <h3>{type_id}</h3>
           <h3>{new Date(date).toLocaleDateString()}</h3>
@@ -120,18 +121,26 @@ export default function UserCard({
             ) : (
               <p>Driver Details Not Available</p>
             )
+          ) : status === "Cancelled" ? (
+            <p>Job Cancelled</p>
           ) : (
             <p>Driver Details Available When Assigned</p>
           )}
         </div>
-        <div className="jobs-button">
-          {buttonText ? (
-            <button onClick={() => onButtonClick(job.id)}>{buttonText}</button>
-          ) : null}
-          {buttonText2 ? (
-            <button onClick={() => onButtonClick(job.id)}>{buttonText2}</button>
-          ) : null}
-        </div>
+        {status !== "Cancelled" && (
+          <div className="jobs-button">
+            {buttonText ? (
+              <button onClick={() => onButtonClick(job.id)}>
+                {buttonText}
+              </button>
+            ) : null}
+            {buttonText2 ? (
+              <button onClick={() => onButtonClick(job.id)}>
+                {buttonText2}
+              </button>
+            ) : null}
+          </div>
+        )}
       </div>
     </>
   );

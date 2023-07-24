@@ -86,6 +86,12 @@
     text-align: left;
     background-color: lightblue;
 }
+
+.cancelled {
+    background-color: grey;
+
+}
+
 .job-card p {
     font-size: 0.85rem;
 }
@@ -185,7 +191,7 @@
 
 }
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
     .utility-panel {
         padding: 5%;
         box-sizing: border-box;

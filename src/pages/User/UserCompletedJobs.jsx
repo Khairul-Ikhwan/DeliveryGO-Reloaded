@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UserCard from "../Jobs/UserCard";
 
-export default function OngoingOrders() {
+export default function UserCompletedJobs() {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,7 +26,7 @@ export default function OngoingOrders() {
       const data = await response.json();
       // Filter jobs with status "Created" or "Assigned"
       const filteredJobs = data.jobs.filter(
-        (job) => job.status === "Created" || job.status === "Assigned"
+        (job) => job.status === "Complete" || job.status === "Cancelled"
       );
       setJobs(filteredJobs);
       setIsLoading(false);
@@ -76,8 +76,6 @@ export default function OngoingOrders() {
             <UserCard
               key={job.id}
               job={job}
-              buttonText={"Cancel Order"}
-              onButtonClick={handleCancel}
             />
           ))}
         </div>

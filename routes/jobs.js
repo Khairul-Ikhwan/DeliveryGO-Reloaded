@@ -40,5 +40,9 @@ router.post('/create', (req, res) => {
     jobsCtrl.complete(req, res, pool);
   });
 
+  router.patch('/cancel', (req, res) => {
+    jobsCtrl.userCancel(req, res, pool);
+  });
+
 
 module.exports = router;

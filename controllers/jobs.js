@@ -303,9 +303,47 @@ async function assignDriver(req, res) {
     }
   }
   
+  async function userCancel(req, res) {
+    try {
+      const { jobId } = req.body;
+      const rawToken = req.headers.authorization;
+      const token = rawToken.replace("Bearer ", "");
+      const decodedToken = verifyToken(token);
+  
+      if (!decodedToken || !decodedToken.userId) {
+        res.status(401).json({ error: 'Invalid or expired token.' });
+        return;
+      }
+  
+      const updateQuery = `
+        UPDATE jobs
+        SET status = 'Cancelled'
+        WHERE id = $1 AND user_id = $2
+        RETURNING *
+      `;
+      const updateValues = [jobId, decodedToken.userId];
+  
+      const result = await pool.query(updateQuery, updateValues);
+      const updatedJob = result.rows[0];
+  
+      if (!updatedJob) {
+        res.status(404).json({ error: 'Job not found or you do not have permission to cancel it.' });
+        return;
+      }
+  
+      res.status(200).json({
+        message: 'Job cancelled successfully',
+        job: updatedJob
+      });
+    } catch (error) {
+      console.error('Error cancelling job:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
 
   
   
   
 
-module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete, driverCompleteJobs, userJobs };
+module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete, driverCompleteJobs, userJobs, userCancel };

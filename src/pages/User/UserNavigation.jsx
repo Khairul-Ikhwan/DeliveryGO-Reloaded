@@ -20,7 +20,7 @@ export default function UserNavigation() {
           </div>
         </NavLink>
 
-        <NavLink to="/user/dashboard/completed">
+        <NavLink to="/user/dashboard/history">
           <div className="navigation">
             <h3>
               Completed <br /> Orders

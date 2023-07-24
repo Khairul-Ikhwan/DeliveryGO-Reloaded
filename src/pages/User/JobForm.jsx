@@ -113,7 +113,7 @@ export default function JobForm() {
       );
     } catch (error) {
       console.error("Error creating job:", error);
-      alert("Error creating job:", error);
+      alert("Please ensure all fields are filled in");
     } finally {
       setIsLoadingSubmit(false);
     }
@@ -295,6 +295,7 @@ export default function JobForm() {
                 />
               </div>
               <div>
+                <label>Time</label>
                 <input
                   type="time"
                   name="time"
@@ -305,6 +306,7 @@ export default function JobForm() {
                 />
               </div>
               <div>
+                <label>Date</label>
                 <input
                   type="date"
                   name="date"
