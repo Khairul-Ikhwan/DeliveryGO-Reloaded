@@ -28,16 +28,30 @@ a {
 
 .page {
   display: flex;
-  align-content: center;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   box-sizing: border-box;
+  border: 1px solid red;
 }
 
-.page :only-child {
-  max-width: 100%;
-  min-width: 50%;
+.not-found {
+  display: flex;
+  align-items: center;
+  background-image: url(https://cdn.pixabay.com/photo/2023/02/21/05/47/rain-7803539_1280.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+  color: white;
+}
+
+.not-found div {
+  background-color: rgba(255,255,255,0.2);
+  padding: 5%;
+  box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .driver {
