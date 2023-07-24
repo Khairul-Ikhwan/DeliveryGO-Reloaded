@@ -42,7 +42,7 @@ export default function UserDetails() {
       <h3>Welcome {user.userName}!</h3>
       <p>Email: {user.userEmail}</p>
       <p>Phone: {user.userPhone}</p>
-      <LogOutButton path="/user" />
+      <LogOutButton path="/" />
     </div>
   );
 }

@@ -29,7 +29,7 @@ export default function DriverDetails() {
           "Network error occurred. Check your internet connection."
         );
       } else {
-        navigate("/driver");
+        navigate("/");
       }
     }
   }
