@@ -23,7 +23,7 @@ export default function UserNavigation() {
         <NavLink to="/user/dashboard/history">
           <div className="navigation">
             <h3>
-              Completed <br /> Orders
+              Order <br /> History
             </h3>
           </div>
         </NavLink>
