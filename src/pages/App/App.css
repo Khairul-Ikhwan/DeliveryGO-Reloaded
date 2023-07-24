@@ -27,11 +27,10 @@ a {
 }
 
 .page {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100dvw;
   height: 100dvh;
   box-sizing: border-box;
   border: 1px solid red;
@@ -69,6 +68,7 @@ a {
   background-size: cover;
   background-blend-mode: multiply;
 }
+
 
 .user {
   background-image: url(https://cdn.pixabay.com/photo/2023/06/27/10/51/man-8091933_1280.jpg);
