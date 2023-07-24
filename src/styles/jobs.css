@@ -92,6 +92,10 @@
 
 }
 
+.sub {
+    background-color: white;
+}
+
 .job-card p {
     font-size: 0.85rem;
 }

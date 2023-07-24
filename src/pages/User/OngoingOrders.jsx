@@ -53,7 +53,6 @@ export default function OngoingOrders() {
         throw new Error(errorData.error || "Failed to cancel job.");
       }
 
-      // Call fetchJobs again to update the job list
       await fetchJobs();
 
       const data = await response.json();
@@ -70,6 +69,8 @@ export default function OngoingOrders() {
       <div className="header">Ongoing Orders</div>
       {isLoading ? (
         <div>Loading...</div>
+      ) : jobs.length === 0 ? (
+        <div className="header sub">No ongoing orders to display.</div>
       ) : (
         <div className="job-container">
           {jobs.map((job) => (

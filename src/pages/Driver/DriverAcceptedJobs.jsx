@@ -81,7 +81,7 @@ export default function DriverAcceptedJobs() {
       {loading ? (
         <p>Loading jobs...</p>
       ) : jobs.length === 0 ? (
-        <div className="header">
+        <div className="header sub">
           <p>You haven't accepted any jobs!</p>
         </div>
       ) : (

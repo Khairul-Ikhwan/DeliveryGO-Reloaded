@@ -37,9 +37,11 @@ export default function UserCompletedJobs() {
 
   return (
     <div>
-      <div className="header">Ongoing Orders</div>
+      <div className="header">Completed Orders</div>
       {isLoading ? (
         <div>Loading...</div>
+      ) : jobs.length === 0 ? (
+        <div className="header sub">No ongoing orders to display.</div>
       ) : (
         <div className="job-container">
           {jobs.map((job) => (
