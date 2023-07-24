@@ -189,8 +189,13 @@
             box-sizing: border-box;
         }
 
-        .accordion-content input {
-            min-width: 300px;
-            max-width: 700px;
+        .accordion-content input, textarea {
+            max-width: 80vw;
+            box-sizing: border-box;
+          }
+
+          .accordion.active .accordion-content {
+            display: block;
+            max-width: 300px;
           }
     }
