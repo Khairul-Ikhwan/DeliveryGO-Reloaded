@@ -11,7 +11,7 @@ export default function DriverLogin({ onSignUpClick }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Reset error state before the new login attempt
+    setError(null);
 
     try {
       const response = await sendRequest("/api/drivers/login", "POST", {
@@ -23,7 +23,7 @@ export default function DriverLogin({ onSignUpClick }) {
       navigate("/driver/dashboard");
     } catch (error) {
       console.error("Error logging in:", error);
-      setError("Invalid email or password. Please try again."); // Set error state based on the response
+      setError("Invalid email or password. Please try again.");
     }
   };
 
