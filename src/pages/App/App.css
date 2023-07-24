@@ -89,4 +89,8 @@ a {
   .user {
     background-position-x: center;
   }
+
+  .not-found {
+    background-position-x: center;
+  }
 }
