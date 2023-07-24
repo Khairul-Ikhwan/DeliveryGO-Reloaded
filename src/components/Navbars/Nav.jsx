@@ -28,7 +28,7 @@ export default function Nav() {
         <NavLink to="/user">
           <p>Customer Login</p>
         </NavLink>
-        <NavLink to="/user">
+        <NavLink to="/driver">
           <p>Driver Login</p>
         </NavLink>
         <NavLink to="/">

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import "../../styles/forms.css";
 import { sendRequest } from "../../helpers/send-helper";
 import dayjs from "dayjs";
@@ -12,6 +13,7 @@ export default function JobForm() {
   const [isLoadingPrice, setIsLoadingPrice] = useState(false);
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const navigate = useNavigate();
 
   const [jobData, setJobData] = useState({
     jobType: "Motorcycle",
@@ -111,6 +113,7 @@ export default function JobForm() {
         "POST",
         jobData
       );
+      navigate("/user/dashboard/active-jobs");
     } catch (error) {
       console.error("Error creating job:", error);
       alert("Please ensure all fields are filled in");
