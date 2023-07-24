@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router";
-import DesktopNav from "../../components/Navbars/DesktopNav";
 import "./App.css";
 import HomePage from "./HomePage";
 import DriverPage from "../Driver/DriverPage";
@@ -7,6 +6,7 @@ import UserPage from "../User/UserPage";
 import DriverDashboard from "../Driver/DriverDashboard";
 import UserDashBooard from "../User/UserDashboard";
 import NotFoundPage from "./NotFoundPage";
+import Nav from "../../components/Navbars/Nav";
 
 export default function App() {
   return (

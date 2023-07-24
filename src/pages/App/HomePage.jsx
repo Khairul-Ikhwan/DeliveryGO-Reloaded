@@ -1,9 +1,11 @@
 import HeroLeft from "../../components/Blocks/HeroLeft";
+import Nav from "../../components/Navbars/Nav";
 import "../App/App.css";
 
 export default function HomePage() {
   return (
     <>
+      <Nav />
       <div className="container">
         <HeroLeft
           className={"driver"}

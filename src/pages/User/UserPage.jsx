@@ -4,6 +4,7 @@ import UserSignUp from "../User/UserSignUp";
 import UserLogin from "../User/UserLogin";
 import { sendRequest } from "../../helpers/send-helper";
 import "../App/App.css";
+import Nav from "../../components/Navbars/Nav";
 
 export default function UserPage() {
   const [showSignUp, setShowSignUp] = useState(false);
@@ -41,12 +42,15 @@ export default function UserPage() {
   }, [navigate]);
 
   return (
-    <div className="page user">
-      {showSignUp ? (
-        <UserSignUp onSignUpClick={handleToggleSignUp} />
-      ) : (
-        <UserLogin onSignUpClick={handleToggleSignUp} />
-      )}
-    </div>
+    <>
+      <Nav />
+      <div className="page user">
+        {showSignUp ? (
+          <UserSignUp onSignUpClick={handleToggleSignUp} />
+        ) : (
+          <UserLogin onSignUpClick={handleToggleSignUp} />
+        )}
+      </div>
+    </>
   );
 }

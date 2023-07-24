@@ -1,30 +1,94 @@
-.desktop-nav {
+ .nav {
     display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    justify-content: space-around;
-    align-items: center;
-    padding: 1%;
+    padding:2.2%;
     box-sizing: border-box;
+    align-items: flex-start;
+    justify-content: flex-end;
     height: 75px;
-    background-color: rgba(255, 255, 255, 0.1);
     width: 100%;
+    position: fixed;
 }
 
-.desktop-nav p {
+.nav div {
+    display: flex;
+    flex-direction: row;
+    justify-items: left;
+    width: 100%;
+   
+}
+
+.nav div img {
+    width: 75px;
+    height: auto;
+    background-color: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+
+.nav p {
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: 400;
+    color: white;
 }
 
-.desktop-nav p:hover {
+.nav p:hover {
     cursor: pointer;
     font-size: 1.7rem;
     font-weight: 900;
 }
 
-@media only screen and (max-width: 600px) {
-    .desktop-nav {
-      display: none;
+.bm-menu-wrap {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.bm-menu nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+@media (max-width: 950px) {
+    .nav {
+        font-size: 1rem;
+        justify-content: flex-end;
     }
-  }
+
+    .nav div {
+        all: unset;
+        padding-top: 5%;
+    }
+
+    .nav div img {
+        background-color: rgba(255, 255, 255, 0.9)
+    }
+
+    .nav :nth-child(2){
+        display: none;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .bm-menu-wrap {
+        display: flex;
+        justify-content: center;
+        
+    }
+
+    .bm-menu nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+    }
+
+
+   
+}

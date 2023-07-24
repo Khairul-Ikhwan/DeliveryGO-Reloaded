@@ -4,6 +4,7 @@ import DriverLogin from "./DriverLogin";
 import DriverSignUp from "./DriverSignUp";
 import "../App/App.css";
 import { sendRequest } from "../../helpers/send-helper";
+import Nav from "../../components/Navbars/Nav";
 
 export default function DriverPage() {
   const [showSignUp, setShowSignUp] = useState(false);
@@ -42,6 +43,7 @@ export default function DriverPage() {
 
   return (
     <>
+      <Nav />
       <div className="page driver">
         {showSignUp ? (
           <DriverSignUp onSignUpClick={handleToggleSignUp} />

@@ -68,10 +68,11 @@ a {
 
 
 .user {
-  background-image: url(https://cdn.pixabay.com/photo/2023/06/27/10/51/man-8091933_1280.jpg);
+  background-image: url(https://images.pexels.com/photos/7190906/pexels-photo-7190906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply;
+  background-position-y: 55%;
 }
 
 @media (max-width: 900px) {
