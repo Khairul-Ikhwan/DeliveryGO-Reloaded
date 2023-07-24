@@ -72,13 +72,13 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply;
-  background-position-y: 65%;
 }
 
-.user button {
+.user div button {
   background-color: white;
   color: black
 }
+
 
 @media (max-width: 900px) {
   .page :only-child {

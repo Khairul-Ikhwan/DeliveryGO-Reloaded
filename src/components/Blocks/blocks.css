@@ -23,9 +23,16 @@
 
 .user {
     flex-direction: row-reverse;
-    background-position-y: 25%;
+    background-position-y: 55%;
     text-align: right;
 }
+
+.user a button {
+    background-color: white;
+    color: black
+  }
+
+
 
 .hero-block a {
     width: unset;
