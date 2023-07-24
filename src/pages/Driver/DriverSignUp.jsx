@@ -20,7 +20,7 @@ export default function DriverSignUp({ onSignUpClick }) {
     driverName: "",
     driverEmail: "",
     driverPhone: "",
-    driverPfp: "",
+    driverPfp: "https://picsum.photos/200/200",
     driverPassword: "",
     confirmPassword: "",
   });

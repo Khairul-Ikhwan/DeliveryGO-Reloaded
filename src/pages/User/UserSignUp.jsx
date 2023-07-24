@@ -9,7 +9,7 @@ export default function UserSignUp({ onSignUpClick }) {
     userName: "",
     userEmail: "",
     userPhone: "",
-    userPfp: "",
+    userPfp: "https://picsum.photos/200/200",
     userPassword: "",
     userBlk: "",
     userStreet: "",
