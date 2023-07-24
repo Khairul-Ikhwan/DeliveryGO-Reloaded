@@ -14,6 +14,7 @@ export default function NotFoundPage() {
   return (
     <div className="page not-found">
       <div>
+        <img src="DeliveryGO.png" alt="Go Logo" />
         <h1>
           {`Page not found`}
           <br />

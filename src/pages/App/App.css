@@ -45,11 +45,20 @@ a {
   background-size: cover;
   background-blend-mode: multiply;
   color: white;
+  box-shadow: 0.5rem;
+}
+
+.not-found div img {
+  width: 30%;
 }
 
 .not-found div {
-  background-color: rgba(255,255,255,0.2);
-  padding: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,25,0.5);
+  padding: 1%;
   box-sizing: border-box;
   border-radius: 20px;
 }
