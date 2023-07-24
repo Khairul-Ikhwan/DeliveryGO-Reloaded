@@ -255,7 +255,7 @@ export default function JobForm() {
             <div className="accordion-content">
               <h3>Total Distance: {jobData.totalDistance}km</h3>
               <input
-                type="text"
+                type="number"
                 placeholder="Your Price"
                 onChange={handleChange}
                 required
