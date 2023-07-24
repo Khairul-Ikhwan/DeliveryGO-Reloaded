@@ -24,8 +24,10 @@ export default function DriverCompletedJobs() {
         null,
         headers
       );
-
-      setCompletedJobs(data.jobs);
+      const sortedJobs = data.jobs.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+      setCompletedJobs(sortedJobs);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching completed jobs:", error);
