@@ -112,7 +112,7 @@ export default function UserCard({
           </p>
         </div>
         <div className="user-field">
-          {status === "Assigned" || status === "Complete" ? (
+          {status === "Assigned" ? (
             driverDetails ? (
               <>
                 <p>Driver: {driverDetails.driverName}</p>
@@ -121,12 +121,15 @@ export default function UserCard({
             ) : (
               <p>Driver Details Not Available</p>
             )
+          ) : status === "Complete" ? (
+            <p>Job Completed</p>
           ) : status === "Cancelled" ? (
             <p>Job Cancelled</p>
           ) : (
             <p>Driver Details Available When Assigned</p>
           )}
         </div>
+
         {status !== "Cancelled" && (
           <div className="jobs-button">
             {buttonText ? (
