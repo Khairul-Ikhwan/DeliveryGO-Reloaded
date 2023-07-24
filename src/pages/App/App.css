@@ -32,7 +32,6 @@ a {
   flex-direction: column;
   height: 100dvh;
   box-sizing: border-box;
-  border: 1px solid red;
 }
 
 .not-found {
