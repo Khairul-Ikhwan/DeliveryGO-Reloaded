@@ -92,6 +92,12 @@ export default function JobsCard({
             {delivery_address_building_name}
           </span>
         </div>
+
+        <div className="user-field">
+          <p>{items}</p>
+          <p>{job_comments}</p>
+        </div>
+
         <div className="misc-info">
           <p>
             Distance: <br />
@@ -107,6 +113,7 @@ export default function JobsCard({
             {convertTo12HourFormat(time)}
           </p>
         </div>
+
         <div className="user-field">
           {status === "Assigned" || status === "Complete" ? (
             userDetails ? (

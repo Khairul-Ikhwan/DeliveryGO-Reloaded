@@ -19,7 +19,7 @@ export default function HomePage() {
           buttonText={"Customer"}
           link={"/user"}
           headerText={"Book A Delivery"}
-          smallText={"Getting your products, right on time"}
+          smallText={"Connecting Communities, Delivering Convenience"}
         />
       </div>
     </>
