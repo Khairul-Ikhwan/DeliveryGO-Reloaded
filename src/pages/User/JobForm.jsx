@@ -34,6 +34,7 @@ export default function JobForm() {
     status: "Created",
     time: "",
     date: "",
+    recPrice: "",
   });
 
   const currentDate = dayjs().format("YYYY-MM-DD");
@@ -81,7 +82,7 @@ export default function JobForm() {
       const { computedPrice, distanceValue } = response;
       setJobData((prevJobData) => ({
         ...prevJobData,
-        price: computedPrice,
+        recPrice: computedPrice,
         totalDistance: distanceValue,
       }));
     } catch (error) {
@@ -91,7 +92,7 @@ export default function JobForm() {
           "Network error occurred. Check your internet connection."
         );
       } else {
-        alert("Error checking price:", error);
+        alert("Please ensure postal codes are correct!");
       }
     } finally {
       setIsLoadingPrice(false);
@@ -107,17 +108,50 @@ export default function JobForm() {
     e.preventDefault();
     setIsLoadingSubmit(true);
 
-    try {
-      const createJobResponse = await sendRequest(
-        "/api/jobs/create",
-        "POST",
-        jobData
-      );
-      navigate("/user/dashboard/active-jobs");
-    } catch (error) {
-      console.error("Error creating job:", error);
-      alert("Please ensure all fields are filled in");
-    } finally {
+    const checkUser = async (token) => {
+      try {
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        const response = await sendRequest(
+          "/api/users/getUser",
+          "POST",
+          null,
+          headers
+        );
+
+        const emailData = {
+          email: response.user.userEmail, // Get the user email from the response
+          subject: "Your Order Has Been Created!",
+          htmlPath: "controllers/emailTemplates/orderCreated.html",
+        };
+
+        const sendEmail = await sendRequest(
+          "/api/emails/sendEmail",
+          "POST",
+          emailData
+        );
+
+        const createJobResponse = await sendRequest(
+          "/api/jobs/create",
+          "POST",
+          jobData
+        );
+
+        navigate("/user/dashboard/active-jobs");
+      } catch (error) {
+        console.error("Error creating job:", error);
+        alert("Please ensure all fields are filled in");
+      } finally {
+        setIsLoadingSubmit(false);
+      }
+    };
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      checkUser(token);
+    } else {
+      console.error("No token found in local storage");
       setIsLoadingSubmit(false);
     }
   };
@@ -256,11 +290,13 @@ export default function JobForm() {
               <h3>Total Distance: {jobData.totalDistance}km</h3>
               <input
                 type="number"
+                name="price"
                 placeholder="Your Price"
                 onChange={handleChange}
+                value={jobData.price}
                 required
               />
-              <h4>Recommended Price: ${jobData.price}</h4>
+              <h4>Recommended Price: ${jobData.recPrice}</h4>
               <MagicButton
                 label="Check Price"
                 onClick={handleCheckPrice}
