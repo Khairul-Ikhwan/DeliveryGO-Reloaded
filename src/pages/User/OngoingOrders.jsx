@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import UserCard from "../Jobs/UserCard";
+import { sendRequest } from "../../helpers/send-helper";
 
 export default function OngoingOrders() {
   const [jobs, setJobs] = useState([]);
@@ -38,6 +39,29 @@ export default function OngoingOrders() {
 
   async function handleCancel(jobId) {
     try {
+      console.log(jobId);
+      const notifyDriverResponse = await fetch(`/api/emails/notifyDriver`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ jobID: jobId }),
+      });
+
+      const notifyDriverData = await notifyDriverResponse.json();
+
+      const driverEmail = {
+        email: notifyDriverData.driverEmail, // Get the user email from the response
+        subject: "An Order Has Been Cancelled!",
+        htmlPath: "controllers/emailTemplates/orderCancelledDriver.html",
+      };
+
+      const sendDriverEmail = await sendRequest(
+        "/api/emails/sendEmail",
+        "POST",
+        driverEmail
+      );
+
       const token = localStorage.getItem("token");
       const response = await fetch(`/api/jobs/cancel`, {
         method: "PATCH",
@@ -47,6 +71,28 @@ export default function OngoingOrders() {
         },
         body: JSON.stringify({ jobId }),
       });
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const checkResponse = await sendRequest(
+        "/api/users/getUser",
+        "POST",
+        null,
+        headers
+      );
+
+      const emailData = {
+        email: checkResponse.user.userEmail, // Get the user email from the response
+        subject: "Your Order Has Been Cancelled!",
+        htmlPath: "controllers/emailTemplates/orderCancelledUser.html",
+      };
+
+      const sendEmail = await sendRequest(
+        "/api/emails/sendEmail",
+        "POST",
+        emailData
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
