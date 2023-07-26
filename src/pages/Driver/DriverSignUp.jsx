@@ -5,10 +5,10 @@ import { sendRequest } from "../../helpers/send-helper";
 import { NavLink } from "react-router-dom";
 
 export default function DriverSignUp({ onSignUpClick }) {
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     document.title = "Driver Sign Up";
 
-    // You can also reset the title when the component unmounts (optional)
     return () => {
       document.title = "Delivery GO | Powered by the Community";
     };
@@ -43,6 +43,7 @@ export default function DriverSignUp({ onSignUpClick }) {
     }
 
     try {
+      setIsLoading(true);
       // Check if the driver with the provided email already exists
       const checkEmailResponse = await sendRequest(
         "/api/drivers/check",
@@ -61,13 +62,25 @@ export default function DriverSignUp({ onSignUpClick }) {
           formData
         );
 
+        const emailData = {
+          email: formData.driverEmail,
+          subject: "Hello from DeliveryGO!",
+          htmlPath: "controllers/emailTemplates/DriverSignUp.html",
+        };
+
+        const sendEmail = await sendRequest(
+          "/api/emails/sendEmail",
+          "POST",
+          emailData
+        );
+
         localStorage.setItem("token", createResponse.token);
         navigate("/driver/dashboard");
-        console.log("Driver created successfully");
-        console.log(createResponse);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error creating driver:", error);
+      setIsLoading(false);
     }
   };
 
@@ -141,7 +154,7 @@ export default function DriverSignUp({ onSignUpClick }) {
         </div>
         {errorMessage && <msg className="error-message">{errorMessage}</msg>}
         <button type="submit" disabled={isSubmitDisabled}>
-          Register
+          {isLoading ? "Loading..." : "Register"}
         </button>
 
         <p>

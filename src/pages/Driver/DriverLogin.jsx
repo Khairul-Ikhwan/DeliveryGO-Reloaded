@@ -7,6 +7,7 @@ export default function DriverLogin({ onSignUpClick }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -14,6 +15,7 @@ export default function DriverLogin({ onSignUpClick }) {
     setError(null);
 
     try {
+      setIsLoading(true);
       const response = await sendRequest("/api/drivers/login", "POST", {
         driverEmail: email,
         driverPassword: password,
@@ -21,7 +23,9 @@ export default function DriverLogin({ onSignUpClick }) {
 
       localStorage.setItem("token", response.token);
       navigate("/driver/dashboard");
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error("Error logging in:", error);
       setError("Invalid email or password. Please try again.");
     }
@@ -47,7 +51,7 @@ export default function DriverLogin({ onSignUpClick }) {
             onChange={(e) => setPassword(e.target.value)}
           />
           {error && <msg className="error-message">{error}</msg>}
-          <button type="submit">Login</button>
+          <button type="submit">{isLoading ? "Loading..." : "Login"}</button>
 
           <p>
             <NavLink to="#" onClick={onSignUpClick}>

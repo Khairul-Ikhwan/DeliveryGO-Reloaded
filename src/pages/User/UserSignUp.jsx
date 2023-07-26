@@ -4,6 +4,8 @@ import { sendRequest } from "../../helpers/send-helper";
 import "../../styles/forms.css";
 
 export default function UserSignUp({ onSignUpClick }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
@@ -28,18 +30,31 @@ export default function UserSignUp({ onSignUpClick }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.userPassword !== formData.confirmPassword) {
-      console.error("Password mismatch");
+      setErrorMessage("Password mismatch");
       return;
     }
 
     try {
+      setIsLoading(true);
+      const emailData = {
+        email: formData.userEmail,
+        subject: "Hello from DeliveryGO!",
+        htmlPath: "controllers/emailTemplates/UserSignUp.html",
+      };
+
       const response = await sendRequest("/api/users/create", "POST", formData);
+
+      const sendEmail = await sendRequest(
+        "/api/emails/sendEmail",
+        "POST",
+        emailData
+      );
       localStorage.setItem("token", response.token);
       navigate("/user/dashboard");
-      console.log("User created successfully");
-      console.log(response);
+      setIsLoading(false);
     } catch (error) {
-      console.error("Error creating user:", error);
+      setIsLoading(false);
+      setErrorMessage("Error creating user:", error);
     }
   };
 
@@ -151,8 +166,9 @@ export default function UserSignUp({ onSignUpClick }) {
             required
           />
         </div> */}
+        {errorMessage && <msg className="error-message">{errorMessage}</msg>}
         <button type="submit" disabled={isSubmitDisabled}>
-          Register
+          {isLoading ? "Loading..." : "Register"}
         </button>
         <p>
           <NavLink to="#" onClick={onSignUpClick}>
