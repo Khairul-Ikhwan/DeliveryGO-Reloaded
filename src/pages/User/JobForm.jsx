@@ -4,7 +4,7 @@ import "../../styles/forms.css";
 import { sendRequest } from "../../helpers/send-helper";
 import dayjs from "dayjs";
 import MagicButton from "../../components/Buttons/MagicButton";
-import LocationSearchInput from "../../components/Blocks/PlacesAutocomplete";
+import Search from "../../components/Blocks/PlacesAutocomplete";
 
 export default function JobForm() {
   const [showPickup, setShowPickup] = useState(false);
@@ -157,6 +157,36 @@ export default function JobForm() {
     }
   };
 
+  const handlePickupSuggestionSelected = (street, postal, building) => {
+    setJobData((prevJobData) => ({
+      ...prevJobData,
+      pickupStreet: street,
+      pickupPostal: postal,
+    }));
+  };
+
+  const handleDeliverySuggestionSelected = (street, postal, building) => {
+    setJobData((prevJobData) => ({
+      ...prevJobData,
+      deliveryStreet: street,
+      deliveryPostal: postal,
+    }));
+  };
+
+  const handlePickupValueChange = (value) => {
+    setJobData((prevJobData) => ({
+      ...prevJobData,
+      pickupStreet: value,
+    }));
+  };
+
+  const handleDeliveryValueChange = (value) => {
+    setJobData((prevJobData) => ({
+      ...prevJobData,
+      deliveryStreet: value,
+    }));
+  };
+
   return (
     <div className="forms-container">
       <form>
@@ -187,12 +217,10 @@ export default function JobForm() {
           {showPickup && (
             <div className="accordion-content">
               <div>
-                <input
-                  type="text"
-                  name="pickupStreet"
-                  placeholder="Pickup Street"
-                  value={jobData.pickupStreet}
-                  onChange={handleChange}
+                <label>Street Address</label>
+                <Search
+                  onSuggestionSelected={handlePickupSuggestionSelected}
+                  onValueChange={handlePickupValueChange}
                 />
               </div>
               <div>
@@ -237,12 +265,10 @@ export default function JobForm() {
           {showDelivery && (
             <div className="accordion-content">
               <div>
-                <input
-                  type="text"
-                  name="deliveryStreet"
-                  placeholder="Delivery Street"
-                  value={jobData.deliveryStreet}
-                  onChange={handleChange}
+                <label>Street Address</label>
+                <Search
+                  onSuggestionSelected={handleDeliverySuggestionSelected}
+                  onValueChange={handleDeliveryValueChange}
                 />
               </div>
               <div>

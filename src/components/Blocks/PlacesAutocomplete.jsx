@@ -1,37 +1,42 @@
-import React, { useState } from "react";
+import { useState, useCallback } from "react";
 import useOnclickOutside from "react-cool-onclickoutside";
 import debounce from "lodash/debounce";
 import { sendRequest } from "../../helpers/send-helper";
 
-export default function Search() {
+export default function Search({ onSuggestionSelected, onValueChange }) {
   const [value, setValue] = useState("");
   const [postalCode, setPostalCode] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
+  const [buildingName, setBuildingName] = useState(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const registerRef = useOnclickOutside(() => {
-    setValue("");
+    setShowSuggestions(false);
   });
 
-  const handleInput = (e) => {
-    setValue(e.target.value);
-    fetchSuggestions(e.target.value);
-  };
-
-  const fetchSuggestions = debounce(async (value) => {
-    const data = await sendRequest(
-      `/api/jobs/autocomplete/${encodeURIComponent(value)}`,
-      "GET"
-    );
-    setSuggestions(data.predictions);
-  }, 200);
+  const fetchSuggestions = useCallback(
+    debounce(async (value) => {
+      const data = await sendRequest(
+        `/api/jobs/autocomplete/${encodeURIComponent(value)}`,
+        "GET"
+      );
+      setSuggestions(data.predictions);
+      setShowSuggestions(true);
+    }, 1000),
+    []
+  );
 
   const handleSelect = (suggestion) => () => {
     setValue(suggestion.description);
+    setShowSuggestions(false);
     sendRequest(
       `/api/jobs/geocode/${encodeURIComponent(suggestion.description)}`,
       "GET"
-    ).then(({ postalCode }) => {
+    ).then(({ postalCode, formattedAddress }) => {
       setPostalCode(postalCode);
+      const buildingName = formattedAddress.split(",")[0];
+      setBuildingName(buildingName);
+      onSuggestionSelected(suggestion.description, postalCode, buildingName);
     });
   };
 
@@ -43,12 +48,19 @@ export default function Search() {
       </li>
     ));
 
-  return (
-    <div ref={registerRef}>
-      <input value={value} onChange={handleInput} />
+  const handleInput = (e) => {
+    const value = e.target.value;
+    setValue(value);
+    fetchSuggestions(value);
+    onValueChange(value);
+  };
 
-      {suggestions.length > 0 && <ul>{renderSuggestions()}</ul>}
-      {postalCode && <div>Postal Code: {postalCode}</div>}
+  return (
+    <div className="autosearch">
+      <input value={value} onChange={handleInput} />
+      {showSuggestions && suggestions.length > 0 && (
+        <ul ref={registerRef}>{renderSuggestions()}</ul>
+      )}
     </div>
   );
 }

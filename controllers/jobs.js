@@ -366,12 +366,16 @@ async function assignDriver(req, res) {
       const postalCodeComponent = addressComponents.find(component => component.types.includes('postal_code'));
       const postalCode = postalCodeComponent ? postalCodeComponent.long_name : null;
   
-      res.json({ postalCode });
+      // Get the formatted address which may contain the building name
+      const formattedAddress = data.results[0].formatted_address;
+  
+      res.json({ postalCode, formattedAddress });
     } catch (error) {
       console.error('Error:', error);
       res.status(500).json({ error: 'Error fetching geocode' });
     }
   }
+  
   
   
   
