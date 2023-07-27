@@ -122,51 +122,64 @@ async function deleteDriverByEmail(req, res) {
   }
 }
 
-async function updateDriverByEmail(req, res) {
-  const { email, password, driverPhone, driverPfp } = req.body;
+async function updateDriver(req, res) {
+  const { driverEmail, driverPhone, driverPfp, driverPassword } = req.body;
+  const authorizationHeader = req.headers.authorization;
+  if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+  const accessToken = authorizationHeader.slice(7);
+  const decoded = verifyToken(accessToken);
+  if (!decoded) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+  const { driverId } = decoded;
+
 
   try {
-    const querySelect = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
-    const resultSelect = await pool.query(querySelect, [email]);
-    const driver = resultSelect.rows[0];
-
-    if (!driver) {
-      return res.status(404).json({
-        message: 'Driver not found'
-      });
-    }
-
     let hashedPassword;
-    if (password) {
-      hashedPassword = await hashPassword(password);
+    if (driverPassword && driverPassword.trim() !== "") {
+      hashedPassword = await hashPassword(driverPassword);
     }
 
     let queryUpdate = 'UPDATE drivers SET ';
     const valuesUpdate = [];
+    const updates = [];
 
-    if (driverPhone !== undefined) {
-      queryUpdate += `"driverPhone" = $1, `;
+    if (driverEmail && driverEmail.trim() !== "") {
+      updates.push(`"driverEmail" = $${updates.length + 1}`);
+      valuesUpdate.push(driverEmail);
+    }
+
+    if (driverPhone && driverPhone.trim() !== "") {
+      updates.push(`"driverPhone" = $${updates.length + 1}`);
       valuesUpdate.push(driverPhone);
     }
 
-    if (driverPfp !== undefined) {
-      queryUpdate += `"driverPfp" = $${valuesUpdate.length + 1}, `;
+    if (driverPfp && driverPfp.trim() !== "") {
+      updates.push(`"driverPfp" = $${updates.length + 1}`);
       valuesUpdate.push(driverPfp);
     }
 
     if (hashedPassword) {
-      queryUpdate += `"driverPassword" = $${valuesUpdate.length + 1}, `;
+      updates.push(`"driverPassword" = $${updates.length + 1}`);
       valuesUpdate.push(hashedPassword);
     }
 
-    queryUpdate = queryUpdate.slice(0, -2) + ` WHERE "driverEmail" = $${valuesUpdate.length + 1}`;
-    valuesUpdate.push(email);
+    if (updates.length > 0) {
+      queryUpdate += updates.join(', ') + ` WHERE "id" = $${valuesUpdate.length + 1}`;
+      valuesUpdate.push(driverId);
+    } else {
+      return res.status(400).json({ message: 'No updates to make' });
+    }
 
     try {
       await pool.query(queryUpdate, valuesUpdate);
 
-      const queryFetchUpdated = 'SELECT * FROM drivers WHERE "driverEmail" = $1';
-      const resultFetchUpdated = await pool.query(queryFetchUpdated, [email]);
+      const queryFetchUpdated = 'SELECT * FROM drivers WHERE "id" = $1';
+      const resultFetchUpdated = await pool.query(queryFetchUpdated, [driverId]);
       const updatedDriver = resultFetchUpdated.rows[0];
 
       return res.status(200).json({
@@ -182,6 +195,10 @@ async function updateDriverByEmail(req, res) {
     return res.status(500).json({ error: 'Error selecting driver' });
   }
 }
+
+
+
+
 
 
 async function driverLogIn(req, res) {
@@ -256,7 +273,7 @@ module.exports = {
   getAllDrivers,
   findDriverById,
   deleteDriverByEmail,
-  updateDriverByEmail,
+  updateDriver,
   driverLogIn,
   checkEmail,
   findDriver

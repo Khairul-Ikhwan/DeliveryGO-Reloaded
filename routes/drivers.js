@@ -22,17 +22,14 @@ router.get('/find-driver/:driverId', (req, res) => {
     driverCtrl.findDriver(req, res, pool);
   });
 
-// Route to unalive a driver
 router.delete('/delete', (req, res) => {
     driverCtrl.deleteDriverByEmail(req,res,pool)
 })
 
 // Route to update driver details, you need the email tho
-router.patch('/update', (req, res) => {
-    driverCtrl.updateDriverByEmail(req,res,pool)
+router.post('/update', (req, res) => {
+    driverCtrl.updateDriver(req,res,pool)
 })
-
-
 
 // Login Route
 router.post('/login', (req, res) => {

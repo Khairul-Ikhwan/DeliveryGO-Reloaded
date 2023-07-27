@@ -21,5 +21,9 @@ router.post('/getUser', (req, res) => {
   userCtrl.getUserDetails(req, res, pool);
 });
 
+router.post('/update', (req, res) => {
+  userCtrl.updateUser(req, res, pool);
+});
+
 
 module.exports = router;
