@@ -32,6 +32,9 @@ app.use('/api/jobs', jobRoutes)
 const emailRoutes = require('./routes/emails')
 app.use('/api/emails', emailRoutes)
 
+const imageRoutes = require('./routes/images')
+app.use('/api/images', imageRoutes)
+
 // Catch all route
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
