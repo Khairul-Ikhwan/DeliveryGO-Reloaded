@@ -39,7 +39,7 @@ export default function UserSignUp({ onSignUpClick }) {
       const emailData = {
         email: formData.userEmail,
         subject: "Hello from DeliveryGO!",
-        htmlPath: "controllers/emailTemplates/UserSignUp.html",
+        htmlPath: "controllers/emailTemplates/userSignUp.html",
       };
 
       const response = await sendRequest("/api/users/create", "POST", formData);
