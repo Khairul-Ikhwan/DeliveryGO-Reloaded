@@ -7,6 +7,7 @@ import DriverDashboard from "../Driver/DriverDashboard";
 import UserDashBooard from "../User/UserDashboard";
 import NotFoundPage from "./NotFoundPage";
 import Nav from "../../components/Navbars/Nav";
+import LocationSearchInput from "../../components/Blocks/PlacesAutocomplete";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/user" element={<UserPage />} />
         <Route path="/driver/dashboard/*" element={<DriverDashboard />} />
         <Route path="/user/dashboard/*" element={<UserDashBooard />} />
+        <Route path="/autocomplete" element={<LocationSearchInput />} />
       </Routes>
     </main>
   );

@@ -4,6 +4,7 @@ import "../../styles/forms.css";
 import { sendRequest } from "../../helpers/send-helper";
 import dayjs from "dayjs";
 import MagicButton from "../../components/Buttons/MagicButton";
+import LocationSearchInput from "../../components/Blocks/PlacesAutocomplete";
 
 export default function JobForm() {
   const [showPickup, setShowPickup] = useState(false);

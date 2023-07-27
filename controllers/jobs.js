@@ -341,9 +341,40 @@ async function assignDriver(req, res) {
     }
   }
   
+  async function getAutocomplete(req, res) {
+    const input = req.params.input;
+    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${process.env.MAPS_API_KEY}&components=country:SG&types=address`;
+  
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Error fetching autocomplete suggestions' });
+    }
+  }
 
+  async function getGeocode(req, res) {
+    const address = req.params.address;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${process.env.MAPS_API_KEY}`;
+  
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      const addressComponents = data.results[0].address_components;
+      const postalCodeComponent = addressComponents.find(component => component.types.includes('postal_code'));
+      const postalCode = postalCodeComponent ? postalCodeComponent.long_name : null;
+  
+      res.json({ postalCode });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Error fetching geocode' });
+    }
+  }
   
   
   
-
-module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete, driverCompleteJobs, userJobs, userCancel };
+  
+  
+module.exports = { createJob, assignDriver, getDistAndPrice, getJobs, driverJobs, complete, driverCompleteJobs, userJobs, userCancel, getAutocomplete, getGeocode };

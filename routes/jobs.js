@@ -44,5 +44,15 @@ router.post('/create', (req, res) => {
     jobsCtrl.userCancel(req, res, pool);
   });
 
+  router.get('/autocomplete/:input', (req, res) => {
+    jobsCtrl.getAutocomplete(req, res);
+  });
+
+  router.get('/geocode/:address', (req, res) => {
+    jobsCtrl.getGeocode(req, res);
+  });
+
+  
+  
 
 module.exports = router;
