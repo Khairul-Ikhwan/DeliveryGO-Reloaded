@@ -23,9 +23,9 @@ DeliveryGO Reloaded is a project designed to streamline the process of tracking 
 The planning and ideation process for this project can be viewed on Trello: [Trello Board](https://trello.com/b/pz4ZkQTg/deliverygo)
 
 ## Images
-![HomePage](https://drive.google.com/file/d/1khxIW4FXUXfl76oCY12CjnSdildxD7V7/view?usp=drive_link)
-![UserView](https://drive.google.com/file/d/1XtQ5UOwdpGVsryLXe-SSS6Z_jd9Hw76X/view?usp=drive_link) 
-![DriverView](https://drive.google.com/file/d/1XXVZ2TEHQ8NXpK4NmbN8rG1e06829Snv/view?usp=drive_link)
+![HomePage](https://drive.google.com/file/d/1khxIW4FXUXfl76oCY12CjnSdildxD7V7/view?usp=sharing)
+![UserView](https://drive.google.com/file/d/1XtQ5UOwdpGVsryLXe-SSS6Z_jd9Hw76X/view?usp=sharing)
+![DriverView](https://drive.google.com/file/d/1XXVZ2TEHQ8NXpK4NmbN8rG1e06829Snv/view?usp=sharing)
 
 
 ## Technologies Used, Tech Stack
