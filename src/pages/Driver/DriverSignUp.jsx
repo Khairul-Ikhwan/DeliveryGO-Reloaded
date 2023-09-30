@@ -65,7 +65,7 @@ export default function DriverSignUp({ onSignUpClick }) {
         const emailData = {
           email: formData.driverEmail,
           subject: "Hello from DeliveryGO!",
-          htmlPath: "controllers/emailTemplates/DriverSignUp.html",
+          htmlPath: "controllers/emailTemplates/driverSignUp.html",
         };
 
         const sendEmail = await sendRequest(
